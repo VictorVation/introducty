@@ -1,18 +1,24 @@
+"use client";
+
 import { useState } from "react";
 import { useUser } from "@supabase/auth-helpers-react";
 import { Database } from "~/types/supabase";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  links: Database["public"]["Tables"]["Links"]["Row"][];
+  links?: {
+    id: number;
+    url: string;
+    title: string;
+  }[];
 };
 export default function LinksSetupComponent({ links }: Props) {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const router = useRouter();
 
-  const refreshPage = () => router.replace(router.asPath);
+  const refreshPage = () => router.refresh();
 
   const user = useUser();
 
@@ -100,7 +106,7 @@ export default function LinksSetupComponent({ links }: Props) {
           Add Link
         </button>
       </div>
-      {links.map((link) => (
+      {(links ?? []).map((link) => (
         <div
           key={link.id}
           className={
