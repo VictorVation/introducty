@@ -30,10 +30,8 @@ export default async function Account({}: Props) {
   const username = user.username;
   return (
     <div className={"min-h-screen"}>
-      <SupabaseProvider session={session}>
-        <Header />
-        <UsernameEditor username={username} />
-      </SupabaseProvider>
+      <Header />
+      <UsernameEditor username={username} />
     </div>
   );
 }

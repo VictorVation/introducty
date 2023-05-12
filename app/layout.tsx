@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import SupabaseProvider from "./supabase-provider";
 
 export const metadata = {
   title: "Introducty ⚡ The fastest way to put your link in bio",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="container">{children}</main>
+        <main className="container">
+          <SupabaseProvider session={null}>{children}</SupabaseProvider>
+        </main>
       </body>
     </html>
   );

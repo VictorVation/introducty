@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useSupabase } from "~/app/supabase-provider";
 
 export default function Header() {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
+  const { supabase } = useSupabase();
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -36,7 +35,6 @@ export default function Header() {
           className={`rounded-lg p-4 font-semibold hover:bg-red-200`}
           onClick={navigateToAccountPage}
         >
-          {" "}
           My Account
         </button>
 
@@ -44,7 +42,6 @@ export default function Header() {
           className={`rounded-lg p-4 font-semibold hover:bg-red-200`}
           onClick={handleSignOut}
         >
-          {" "}
           Sign Out
         </button>
       </div>

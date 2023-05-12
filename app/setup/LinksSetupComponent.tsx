@@ -35,7 +35,7 @@ export default function LinksSetupComponent({ links }: Props) {
 
   const addLink = async (data: Inputs) => {
     const { url, title } = data;
-    const res = await fetch("/api/linksNew", {
+    const res = await fetch("/api/links", {
       method: "POST",
       body: JSON.stringify({
         url,
@@ -58,7 +58,7 @@ export default function LinksSetupComponent({ links }: Props) {
       return;
     }
 
-    const res = await fetch(`/api/linksNew?linkId=${linkId}`, {
+    const res = await fetch(`/api/links?linkId=${linkId}`, {
       method: "DELETE",
     });
     const json = await res.json();

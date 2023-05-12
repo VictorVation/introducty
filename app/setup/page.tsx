@@ -1,12 +1,9 @@
-import { Database } from "~/types/supabase";
 import LinksPreviewComponent from "~/app/setup/LinksPreviewComponent";
 import LinksSetupComponent from "~/app/setup/LinksSetupComponent";
 import Header from "~/components/Header";
-import { GetServerSideProps } from "next";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import SupabaseProvider from "../supabase-provider";
 
 type Props = {};
 
@@ -50,9 +47,7 @@ export default async function Setup({}: Props) {
     <div className={"min-h-screen"}>
       <Header />
       <div className={"grid lg:grid-cols-2 md:grid-cols-1"}>
-        <SupabaseProvider session={session}>
-          <LinksSetupComponent links={links} />
-        </SupabaseProvider>
+        <LinksSetupComponent links={links} />
         <LinksPreviewComponent username={user.username} links={links} />
       </div>
     </div>

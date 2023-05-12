@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSupabase } from "~/app/supabase-provider";
 
@@ -9,6 +10,8 @@ type Props = {
 export default function UsernameEditor({ username }: Props) {
   const [newUsername, setNewUsername] = useState(username);
   const { session } = useSupabase();
+  const router = useRouter();
+
   const user = session?.user;
 
   const saveUsername = async () => {
@@ -24,6 +27,7 @@ export default function UsernameEditor({ username }: Props) {
       if (json.error) {
         alert(json.error);
       } else {
+        router.refresh();
         alert("Saved!");
       }
     } catch (error: any) {
