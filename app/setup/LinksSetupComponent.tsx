@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useUser } from "@supabase/auth-helpers-react";
-import { Database } from "~/types/supabase";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 type Props = {
   links?: {
@@ -13,14 +13,26 @@ type Props = {
     title: string;
   }[];
 };
+
+type Inputs = {
+  title: string;
+  url: string;
+};
+
 export default function LinksSetupComponent({ links }: Props) {
-  const [url, setUrl] = useState("");
-  const [title, setTitle] = useState("");
   const router = useRouter();
 
-  const refreshPage = () => router.refresh();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  const user = useUser();
+  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState("");
+
+  const refreshPage = () => router.refresh();
 
   const addLink = async () => {
     try {
@@ -87,24 +99,26 @@ export default function LinksSetupComponent({ links }: Props) {
     <div className={"w-1/2"}>
       <div className={"m-8 w-full rounded-lg border bg-white p-8"}>
         <p className={"text-4xl"}>Enter URL and Title</p>
-        <input
-          className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
-          placeholder="URL"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <button
-          className="mt-8 rounded-full bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={addLink}
-        >
-          Add Link
-        </button>
+        <form onSubmit={handleSubmit(addLink)}>
+          <input
+            className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
+            placeholder="Title"
+            {...register("title", { required: true })}
+          />
+          {errors.title && <span>This field is required</span>}
+          <input
+            className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
+            placeholder="URL"
+            {...register("url", { required: true })}
+          />
+          {errors.url && <span>This field is required</span>}
+          <button
+            type="submit"
+            className="mt-8 rounded-full bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Add Link
+          </button>
+        </form>
       </div>
       {(links ?? []).map((link) => (
         <div
