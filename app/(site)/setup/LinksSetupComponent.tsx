@@ -1,12 +1,14 @@
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { X, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { useSupabase } from "~/app/supabase-provider";
 import { Button } from "~/components/ui/button";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
 
 type Link = {
   id: number;
@@ -25,13 +27,12 @@ type Inputs = {
 
 export default function LinksSetupComponent({ links }: Props) {
   const router = useRouter();
-  const supabase = useSupabase();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    formState: { isSubmitting, isDirty, isValid }, // here
+    formState: { isSubmitting },
   } = useForm<Inputs>();
 
   const refreshPage = () => router.refresh();
@@ -80,7 +81,7 @@ export default function LinksSetupComponent({ links }: Props) {
             Undo
           </a>
         </span>,
-        { id: title }
+        { id: title, duration: 4000 }
       );
     }
   };
@@ -89,8 +90,11 @@ export default function LinksSetupComponent({ links }: Props) {
     <div>
       <div className={"m-8 w-full rounded-lg border bg-white p-8"}>
         <p className={"text-4xl"}>Enter URL and Title</p>
-        <form onSubmit={handleSubmit(addLink)}>
-          <input
+        <form
+          className="flex flex-col gap-4 pt-4"
+          onSubmit={handleSubmit(addLink)}
+        >
+          {/* <input
             className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
             placeholder="Title"
             {...register("title", { required: true })}
@@ -100,13 +104,33 @@ export default function LinksSetupComponent({ links }: Props) {
             className="mt-8 w-full rounded-md border py-4 text-gray-900 shadow-sm"
             placeholder="URL"
             {...register("url", { required: true })}
-          />
-          {errors.url && <span>This field is required</span>}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-8 rounded-full bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
+          /> */}
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              type="text"
+              id="title"
+              placeholder="Title"
+              {...register("title", { required: true })}
+            />
+            {errors.title && (
+              <p className="text-sm text-rose-400">This field is required</p>
+            )}
+          </div>
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="url">URL</Label>
+            <Input
+              type="text"
+              id="url"
+              placeholder="URL"
+              {...register("url", { required: true })}
+            />
+            {errors.url && (
+              <p className="text-sm text-rose-400">This field is required</p>
+            )}
+          </div>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Add Link
           </Button>
         </form>
@@ -123,7 +147,7 @@ export default function LinksSetupComponent({ links }: Props) {
             <p className={"text-2xl"}> {link.url}</p>
           </div>
           <button onClick={() => deleteLink(link)}>
-            <XMarkIcon className="h-12 w-12 text-red-500" />
+            <X className="h-12 w-12 text-red-500" />
           </button>
         </div>
       ))}

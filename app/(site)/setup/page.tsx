@@ -4,6 +4,7 @@ import Header from "~/components/Header";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { clearScreenDown } from "readline";
 
 type Props = {};
 
@@ -38,8 +39,9 @@ export default async function Setup({}: Props) {
   const { data: links, error: fetchLinksError } = await supabase
     .from("Links")
     .select("id, title, url")
+    .order("id")
     .eq("user_id", userId);
-
+  console.log(links);
   if (fetchLinksError) {
     redirect("/");
   }

@@ -1,6 +1,6 @@
 "use client";
+import { ClipboardCopy } from "lucide-react";
 
-import { ClipboardIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 
@@ -11,7 +11,7 @@ type Props = {
 export default function CopyLinkButton({ username }: Props) {
   return (
     <div
-      className="flex items-center hover:cursor-pointer"
+      className="flex items-center justify-center hover:cursor-pointer"
       onClick={async (event) => {
         event.preventDefault();
         await navigator.clipboard.writeText(
@@ -20,12 +20,9 @@ export default function CopyLinkButton({ username }: Props) {
         toast.success("Link copied!", { id: "clipboard" });
       }}
     >
-      <p className="mb-4 text-lg font-bold">{`${process.env.NEXT_PUBLIC_BASE_URL}/${username}`}</p>
-      {/* <Button className="mb-4 ml-4 flex rounded-md border bg-brand-500 px-4 py-2 text-white shadow-sm hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-offset-2">
-        <ClipboardIcon className="h-6 w-6" /> Copy Link
-      </Button> */}
+      <p className="text-lg font-bold mr-2">{`${process.env.NEXT_PUBLIC_BASE_URL}/${username}`}</p>
       <Button>
-        <ClipboardIcon className="h-6 w-6" /> Copy Link
+        <ClipboardCopy className="pr-2" /> Copy Link
       </Button>
     </div>
   );
