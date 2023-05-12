@@ -8,11 +8,13 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      brand: brandColor,
-    },
-    ringColor: {
-      DEFAULT: brandColor["500"],
+    extend: {
+      colors: {
+        brand: brandColor,
+      },
+      ringColor: {
+        DEFAULT: brandColor["500"],
+      },
     },
   },
   plugins: [],
