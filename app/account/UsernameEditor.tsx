@@ -1,12 +1,15 @@
+"use client";
+
 import { useState } from "react";
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSupabase } from "~/app/supabase-provider";
 
 type Props = {
   username: string;
 };
 export default function UsernameEditor({ username }: Props) {
   const [newUsername, setNewUsername] = useState(username);
-  const user = useUser();
+  const { session } = useSupabase();
+  const user = session?.user;
 
   const saveUsername = async () => {
     try {

@@ -27,7 +27,7 @@ export default function AuthPage() {
     <div className="flex h-screen flex-col justify-center">
       <h1 className="flex w-full h-full justify-center">
         <div className="flex-col min-h-full items-center justify-center py-12 w-96">
-          <p> Welcome to LinkTree Clone. </p>
+          <p> Welcome to Introducty. </p>
           <Auth
             supabaseClient={supabaseClient}
             appearance={{ theme: ThemeSupa }}

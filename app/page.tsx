@@ -1,4 +1,4 @@
-import BackgroundGradient from "../Components/common/BackgroundGradient";
+import BackgroundGradient from "~/components/common/BackgroundGradient";
 import Link from "next/link";
 
 export default function Home() {

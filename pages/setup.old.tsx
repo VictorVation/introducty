@@ -1,16 +1,22 @@
-import Header from "../Components/common/Header";
-import UsernameEditor from "../Components/Account/UsernameEditor";
+import { Database } from "~/types/supabase";
+import LinksPreviewComponent from "~/components/Setup/LinksPreviewComponent";
+import LinksSetupComponent from "~/components/Setup/LinksSetupComponent";
+import Header from "~/components/Header";
 import { GetServerSideProps } from "next";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {
+  links: Database["public"]["Tables"]["Links"]["Row"][];
   username: string;
 };
-export default function Account({ username }: Props) {
+export default function Setup({ links, username }: Props) {
   return (
     <div className={"min-h-screen"}>
       <Header />
-      <UsernameEditor username={username} />
+      <div className={"flex"}>
+        <LinksSetupComponent links={links} />
+        <LinksPreviewComponent username={username} links={links} />
+      </div>
     </div>
   );
 }
@@ -21,6 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } = await supabase.auth.getSession();
 
   const userId = session?.user.id;
+
   if (!userId) {
     return {
       redirect: {
@@ -29,6 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
   const { data: user, error: fetchUsernameError } = await supabase
     .from("Users")
     .select("*")
@@ -44,8 +52,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const { data: links, error: fetchLinksError } = await supabase
+    .from("Links")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (fetchLinksError) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
+      links,
       username: user.username,
     },
   };

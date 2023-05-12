@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Header() {
@@ -12,12 +14,12 @@ export default function Header() {
     if (error) {
       alert(error.message);
     } else {
-      await router.push("/");
+      router.push("/");
     }
   };
 
   const navigateToAccountPage = async () => {
-    await router.push("/account");
+    router.push("/account");
   };
 
   return (

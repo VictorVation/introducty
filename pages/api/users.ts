@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Database } from "../../types/supabase";
+import { Database } from "~/types/supabase";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 type Data = {
@@ -29,6 +29,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     userId: string;
   };
 
+  console.log(username, userId);
   if (!username || !userId) {
     res.status(400).json({ error: "Missing username or userId" });
     return;

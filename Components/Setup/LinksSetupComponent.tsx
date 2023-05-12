@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUser } from "@supabase/auth-helpers-react";
-import { Database } from "../../types/supabase";
+import { Database } from "~/types/supabase";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 
@@ -22,7 +22,11 @@ export default function LinksSetupComponent({ links }: Props) {
         alert("You must be logged in to add a link");
         return;
       }
-
+      console.log({
+        url,
+        title,
+        userId: user.id,
+      });
       const resp = await fetch("/api/links", {
         method: "POST",
         body: JSON.stringify({
