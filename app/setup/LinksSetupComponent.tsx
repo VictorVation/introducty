@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useUser } from "@supabase/auth-helpers-react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+
+import { useSupabase } from "../supabase-provider";
 
 type Props = {
   links?: {
@@ -21,82 +21,57 @@ type Inputs = {
 
 export default function LinksSetupComponent({ links }: Props) {
   const router = useRouter();
+  const supabase = useSupabase();
+
+  const user = supabase?.session?.user;
 
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
-
-  const [url, setUrl] = useState("");
-  const [title, setTitle] = useState("");
-
   const refreshPage = () => router.refresh();
 
-  const addLink = async () => {
-    try {
-      if (!user) {
-        alert("You must be logged in to add a link");
-        return;
-      }
-      console.log({
+  const addLink = async (data: Inputs) => {
+    const { url, title } = data;
+    const res = await fetch("/api/linksNew", {
+      method: "POST",
+      body: JSON.stringify({
         url,
         title,
-        userId: user.id,
-      });
-      const resp = await fetch("/api/links", {
-        method: "POST",
-        body: JSON.stringify({
-          url,
-          title,
-          userId: user.id,
-        }),
-      });
-      const json = await resp.json();
-      if (json.error) {
-        alert(json.error);
-      } else {
-        resetState();
-        void refreshPage();
-      }
-    } catch (error: any) {
-      alert(error.message);
+      }),
+    });
+    const json = await res.json();
+
+    if (json.error) {
+      alert(json.error);
+    } else {
+      refreshPage();
+      reset();
     }
   };
 
   const deleteLink = async (linkId: number) => {
-    try {
-      if (!user) {
-        alert("You must be logged in to delete a link");
-        return;
-      }
+    if (!user) {
+      alert("You must be logged in to delete a link");
+      return;
+    }
 
-      const resp = await fetch(
-        `/api/links?userId=${user.id}&linkId=${linkId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const json = await resp.json();
-      if (json.error) {
-        alert(json.error);
-      } else {
-        void refreshPage();
-        resetState();
-      }
-    } catch (error: any) {
-      alert(error.message);
+    const res = await fetch(`/api/linksNew?linkId=${linkId}`, {
+      method: "DELETE",
+    });
+    const json = await res.json();
+    if (json.error) {
+      alert(json.error);
+    } else {
+      refreshPage();
+      reset();
     }
   };
 
-  const resetState = () => {
-    setUrl("");
-    setTitle("");
-  };
-
   return (
-    <div className={"w-1/2"}>
+    <div>
       <div className={"m-8 w-full rounded-lg border bg-white p-8"}>
         <p className={"text-4xl"}>Enter URL and Title</p>
         <form onSubmit={handleSubmit(addLink)}>

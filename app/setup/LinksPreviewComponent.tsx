@@ -12,7 +12,7 @@ type Props = {
 
 export default function LinksPreviewComponent({ links, username }: Props) {
   return (
-    <div className="flex w-1/2 flex-col items-center">
+    <div className="flex flex-col items-center">
       <CopyLinkButton username={username} />
       <div
         className="radius-1/2 rounded-3xl p-2 border-8 border-black text-center relative overflow-hidden"
