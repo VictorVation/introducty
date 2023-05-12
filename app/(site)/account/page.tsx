@@ -4,10 +4,8 @@ import { headers, cookies } from "next/headers";
 
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
-import SupabaseProvider from "../supabase-provider";
 
-type Props = {};
-export default async function Account({}: Props) {
+export default async function Account() {
   const supabase = createServerComponentSupabaseClient({ headers, cookies });
   const {
     data: { session },

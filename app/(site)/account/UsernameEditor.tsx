@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSupabase } from "~/app/supabase-provider";
+import toast from "react-hot-toast";
 
 type Props = {
   username: string;
@@ -28,7 +29,7 @@ export default function UsernameEditor({ username }: Props) {
         alert(json.error);
       } else {
         router.refresh();
-        alert("Saved!");
+        toast.success("Updated username!");
       }
     } catch (error: any) {
       alert(error.message);

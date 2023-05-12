@@ -1,12 +1,11 @@
 "use client";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useEffect, useState } from "react";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSupabase } from "../supabase-provider";
+import { useSupabase } from "~/app/supabase-provider";
 
-export default function AuthPage() {
+export default function SignInPage() {
   const { supabase } = useSupabase();
   const router = useRouter();
   const searchParams = useSearchParams();

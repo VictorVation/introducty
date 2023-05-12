@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSupabase } from "~/app/supabase-provider";
+import toast from "react-hot-toast";
 
 export default function Header() {
   const { supabase } = useSupabase();
@@ -14,6 +15,7 @@ export default function Header() {
       alert(error.message);
     } else {
       router.push("/");
+      toast("Signed out!");
     }
   };
 

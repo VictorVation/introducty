@@ -3,15 +3,19 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-import { useSupabase } from "../supabase-provider";
+import { useSupabase } from "~/app/supabase-provider";
+import { Button } from "~/components/ui/button";
+
+type Link = {
+  id: number;
+  url: string;
+  title: string;
+};
 
 type Props = {
-  links?: {
-    id: number;
-    url: string;
-    title: string;
-  }[];
+  links?: Array<Link>;
 };
 
 type Inputs = {
@@ -22,15 +26,14 @@ type Inputs = {
 export default function LinksSetupComponent({ links }: Props) {
   const router = useRouter();
   const supabase = useSupabase();
-
-  const user = supabase?.session?.user;
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    formState: { isSubmitting, isDirty, isValid }, // here
   } = useForm<Inputs>();
+
   const refreshPage = () => router.refresh();
 
   const addLink = async (data: Inputs) => {
@@ -45,28 +48,40 @@ export default function LinksSetupComponent({ links }: Props) {
     const json = await res.json();
 
     if (json.error) {
-      alert(json.error);
+      toast.error(json.error);
     } else {
       refreshPage();
       reset();
+      toast.success(`Added ${title}`);
     }
   };
 
-  const deleteLink = async (linkId: number) => {
-    if (!user) {
-      alert("You must be logged in to delete a link");
-      return;
-    }
-
-    const res = await fetch(`/api/links?linkId=${linkId}`, {
+  const deleteLink = async (link: Link) => {
+    const { id, title, url } = link;
+    const res = await fetch(`/api/links?linkId=${id}`, {
       method: "DELETE",
     });
     const json = await res.json();
     if (json.error) {
-      alert(json.error);
+      toast.error(json.error);
     } else {
       refreshPage();
       reset();
+      toast.success(
+        <span>
+          Deleted {link.title}.{" "}
+          <a
+            className="underline text-brand-500 cursor-pointer"
+            onClick={() => {
+              addLink({ title, url });
+              toast.dismiss(title);
+            }}
+          >
+            Undo
+          </a>
+        </span>,
+        { id: title }
+      );
     }
   };
 
@@ -87,12 +102,13 @@ export default function LinksSetupComponent({ links }: Props) {
             {...register("url", { required: true })}
           />
           {errors.url && <span>This field is required</span>}
-          <button
+          <Button
             type="submit"
+            disabled={isSubmitting}
             className="mt-8 rounded-full bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Add Link
-          </button>
+          </Button>
         </form>
       </div>
       {(links ?? []).map((link) => (
@@ -106,7 +122,7 @@ export default function LinksSetupComponent({ links }: Props) {
             <p className={"text-4xl"}> {link.title}</p>
             <p className={"text-2xl"}> {link.url}</p>
           </div>
-          <button onClick={() => deleteLink(link.id)}>
+          <button onClick={() => deleteLink(link)}>
             <XMarkIcon className="h-12 w-12 text-red-500" />
           </button>
         </div>
