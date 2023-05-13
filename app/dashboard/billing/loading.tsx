@@ -2,12 +2,12 @@ import { CardSkeleton } from "~/components/CardSkeleton";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
 
-export default function DashboardSettingsLoading() {
+export default function DashboardBillingLoading() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Settings"
-        text="Manage account and website settings."
+        heading="Billing"
+        text="Manage billing and your subscription plan."
       />
       <div className="grid gap-10">
         <CardSkeleton />
