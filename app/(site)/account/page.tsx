@@ -28,7 +28,6 @@ export default async function Account() {
   const username = user.username;
   return (
     <div className={"min-h-screen"}>
-      <Header />
       <UsernameEditor username={username} />
     </div>
   );

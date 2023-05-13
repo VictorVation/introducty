@@ -28,12 +28,7 @@ export default async function Setup({}: Props) {
     .single();
 
   if (fetchUsernameError) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+    redirect("/");
   }
 
   const { data: links, error: fetchLinksError } = await supabase
@@ -47,7 +42,6 @@ export default async function Setup({}: Props) {
   }
   return (
     <div className={"min-h-screen"}>
-      <Header />
       <div className={"grid lg:grid-cols-2 md:grid-cols-1"}>
         <LinksSetupComponent links={links} />
         <LinksPreviewComponent username={user.username} links={links} />
