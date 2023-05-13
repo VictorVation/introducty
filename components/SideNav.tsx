@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, FileText, Settings } from "lucide-react";
+import { ArrowRight, CreditCard, FileText, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -23,13 +23,19 @@ export type SidebarNavItem = {
 const SIDE_NAV_ITEMS = [
   {
     title: "Links",
-    href: "/links",
+    href: "/dashboard",
     icon: FileText,
     disabled: false,
   },
   {
+    title: "Billing",
+    href: "/dashboard/billing",
+    icon: CreditCard,
+    disabled: false,
+  },
+  {
     title: "Account",
-    href: "/account",
+    href: "/dashboard/account",
     icon: Settings,
     disabled: false,
   },

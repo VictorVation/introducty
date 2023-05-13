@@ -1,6 +1,6 @@
-import LinksPreviewComponent from "~/app/(site)/setup/LinksPreviewComponent";
-import LinksSetupComponent from "~/app/(site)/setup/LinksSetupComponent";
-import Header from "~/components/Header";
+import LinksPreviewComponent from "~/app/dashboard/links/LinksPreviewComponent";
+import LinksSetupComponent from "~/app/dashboard/links/LinksSetupComponent";
+import Header from "~/components/Header.old";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";

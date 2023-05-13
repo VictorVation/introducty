@@ -1,4 +1,4 @@
-import Header from "~/components/Header";
+import Header from "~/components/Header.old";
 import UsernameEditor from "./UsernameEditor";
 import { headers, cookies } from "next/headers";
 

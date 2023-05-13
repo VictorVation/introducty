@@ -19,7 +19,7 @@ export default function LoginForm() {
       const userId = session?.user.id;
       if (event === "SIGNED_IN" && userId && userEmail) {
         toast.success("Signed in!");
-        router.push(`/links`);
+        router.push(`/dashboard`);
       }
     });
     return () => {
