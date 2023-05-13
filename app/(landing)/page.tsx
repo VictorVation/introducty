@@ -12,8 +12,8 @@ export default async function IndexPage() {
             Introducty is the simplest way to add your link in bio.
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            Get your naturally-sourced, small batch, hand-crafted, artisan made
-            links in bio for free in seconds.
+            Get your hand-crafted, artisanal, small batch link in bio in
+            seconds.
           </p>
           <div className="space-x-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
