@@ -1,9 +1,11 @@
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { MainNav } from "~/components/MainNav";
 import { SideNav } from "~/components/SideNav";
 import { SiteFooter } from "~/components/SiteFooter";
-// import { UserAccountNav } from "@/components/user-account-nav";
+import { UserAccountNav } from "~/components/UserAccountNav";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -12,17 +14,21 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  //   const user = await getCurrentUser();
-
-  //   if (!user) {
-  //     return notFound();
-  //   }
+  const supabase = createServerComponentSupabaseClient({ headers, cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user = session?.user;
+  if (!user) {
+    return notFound();
+  }
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="container flex h-16 items-center justify-between py-4">
           <MainNav items={[]} />
+          <UserAccountNav user={{ name: user.email, email: user.email }} />
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
