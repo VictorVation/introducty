@@ -38,6 +38,7 @@ export async function PATCH(
       .from("Users")
       .update({
         name: payload.name,
+        email: payload.email,
       })
       .eq("id", user.id);
     if (updateError) {

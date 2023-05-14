@@ -20,6 +20,7 @@ import { Label } from "~/components/ui/label";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { fromZodError } from "zod-validation-error";
+import { startTransition } from "react";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: { id: string; name: string; email: string };
@@ -47,7 +48,9 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
       body: JSON.stringify({ name, email }),
     });
     if (resp.ok) {
-      router.refresh();
+      startTransition(() => {
+        router.refresh();
+      });
       toast.success("Updated account!");
     } else {
       const message = await resp?.text();
