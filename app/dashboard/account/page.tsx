@@ -21,10 +21,10 @@ export default async function SettingsPage() {
   const supabase = createServerComponentSupabaseClient({ headers, cookies });
   const { data: user, error: fetchUsernameError } = await supabase
     .from("Users")
-    .select("*")
+    .select("id, name, email")
     .eq("id", authUser.id)
     .single();
-  console.log(user);
+
   if (fetchUsernameError) {
     redirect("/login");
   }
@@ -37,7 +37,7 @@ export default async function SettingsPage() {
       />
       <div className="grid gap-10">
         <UserNameForm
-          user={{ id: user.id, name: user.name, username: user.username || "" }}
+          user={{ id: user.id, name: user.name, email: user.email || "" }}
         />
       </div>
     </DashboardShell>

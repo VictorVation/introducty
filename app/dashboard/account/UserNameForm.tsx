@@ -19,13 +19,15 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { fromZodError } from "zod-validation-error";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: { id: string; name: string; username: string };
+  user: { id: string; name: string; email: string };
 }
 
 type FormData = {
-  username: string;
+  name: string;
+  email: string;
 };
 
 export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
@@ -33,20 +35,23 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ defaultValues: { username: user.username } });
+  } = useForm<FormData>({
+    defaultValues: { name: user.name, email: user.email },
+  });
   const router = useRouter();
 
   async function onSubmit(formData: FormData) {
-    const { username } = formData;
+    const { name, email } = formData;
     const resp = await fetch(`/api/users/${user.id}`, {
       method: "PATCH",
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ name, email }),
     });
     if (resp.ok) {
       router.refresh();
-      toast.success("Updated username!");
+      toast.success("Updated account!");
     } else {
-      toast.error("Error updating account. Your changes were not saved.");
+      const message = await resp?.text();
+      toast.error(message);
     }
   }
 
@@ -58,26 +63,34 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Your Name</CardTitle>
-          <CardDescription>
-            Please enter your full name or a display name you are comfortable
-            with.
-          </CardDescription>
+          <CardTitle>Account</CardTitle>
+          <CardDescription>Update your account details</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="name">
-              Name
-            </Label>
+        <CardContent className="grid gap-4 w-full">
+          <div className="grid gap-1.5">
+            <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               className="w-[400px]"
               size={32}
-              {...register("username")}
+              {...register("name")}
             />
-            {errors?.username && (
+            {errors?.name && (
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+            )}
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              className="w-[400px]"
+              size={32}
+              {...register("email")}
+            />
+            {errors?.email && (
               <p className="px-1 text-xs text-red-600">
-                {errors.username.message}
+                {errors.email.message}
               </p>
             )}
           </div>

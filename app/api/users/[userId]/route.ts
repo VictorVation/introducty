@@ -1,6 +1,7 @@
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
+import { fromZodError } from "zod-validation-error";
 
 import { userNameSchema } from "~/lib/validations/user";
 import { Database } from "~/types/supabase";
@@ -36,7 +37,7 @@ export async function PATCH(
     const { error: updateError } = await supabase
       .from("Users")
       .update({
-        username: payload.username,
+        name: payload.name,
       })
       .eq("id", user.id);
     if (updateError) {
@@ -44,10 +45,11 @@ export async function PATCH(
         status: 500,
       });
     }
+
     return new Response(null, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 });
+      return new Response(fromZodError(error).message, { status: 422 });
     }
 
     return new Response(null, { status: 500 });
