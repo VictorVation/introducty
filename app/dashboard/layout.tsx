@@ -18,7 +18,13 @@ export default async function DashboardLayout({
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  const user = session?.user;
+  const authUser = session?.user;
+  const { data: user } = await supabase
+    .from("Users")
+    .select("id, name, email")
+    .eq("id", authUser?.id)
+    .single();
+
   if (!user) {
     return notFound();
   }
@@ -28,7 +34,7 @@ export default async function DashboardLayout({
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="container flex h-16 items-center justify-between py-4">
           <MainNav items={[]} />
-          <UserAccountNav user={{ name: user.email, email: user.email }} />
+          <UserAccountNav user={{ name: user.name, email: user.email }} />
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
