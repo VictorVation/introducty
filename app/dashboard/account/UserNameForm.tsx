@@ -35,23 +35,18 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ defaultValues: { username: user.username } });
   const router = useRouter();
-  const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
-  async function onSubmit(data: FormData) {
-    const { username } = data;
-    setIsSaving(true);
-    const resp = await fetch("/api/users", {
-      method: "POST",
+  async function onSubmit(formData: FormData) {
+    const { username } = formData;
+    const resp = await fetch(`/api/users/${user.id}`, {
+      method: "PATCH",
       body: JSON.stringify({ username }),
     });
-    const json = await resp.json();
-    if (json.error) {
-      toast.error(json.error);
-      setIsSaving(false);
-    } else {
+    if (resp.ok) {
       router.refresh();
-      setIsSaving(false);
       toast.success("Updated username!");
+    } else {
+      toast.error("Error updating account. Your changes were not saved.");
     }
   }
 
@@ -91,9 +86,9 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
           <button
             type="submit"
             className={cn(buttonVariants(), className)}
-            disabled={isSaving}
+            disabled={isSubmitting}
           >
-            {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             <span>Save</span>
           </button>
         </CardFooter>

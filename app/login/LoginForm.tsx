@@ -19,6 +19,7 @@ export default function LoginForm() {
       const userId = session?.user.id;
       if (event === "SIGNED_IN" && userId && userEmail) {
         toast.success("Signed in!");
+        subscription?.unsubscribe();
         router.push(`/dashboard`);
       }
     });
