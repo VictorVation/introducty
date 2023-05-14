@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { cn, formatDate } from "~/lib/utils";
+import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
 import {
   Card,
@@ -42,7 +42,7 @@ export function BillingForm({
 }: BillingFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  async function onSubmit(event) {
+  async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(!isLoading);
 
@@ -89,7 +89,7 @@ export function BillingForm({
               {subscriptionPlan.isCanceled
                 ? "Your plan will be canceled on "
                 : "Your plan renews on "}
-              {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}.
+              {/* {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}. */}
             </p>
           ) : null}
         </CardFooter>
