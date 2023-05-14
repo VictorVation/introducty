@@ -33,6 +33,8 @@ export default async function BillingPage() {
     description:
       "The free plan is limited to 3 links with a minimum length of 6 characters. Upgrade to the PRO plan for unlimited posts and premium links (3-6 characters).",
     stripePriceId: "123",
+    stripeCustomerId: "2",
+    stripeSubscriptionId: "1",
   };
   return (
     <DashboardShell>

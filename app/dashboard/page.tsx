@@ -1,24 +1,18 @@
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { LinkCreateButton } from "~/components/LinkCreateButton";
 import { EmptyPlaceholder } from "~/components/EmptyPlaceholder";
 import { DashboardHeader } from "~/components/DashboardHeader";
-// import { PostCreateButton } from "~/components/post-create-button";
-// import { LinkItemPostItem } from "~/components/LinkItem";
 import { DashboardShell } from "~/components/DashboardShell";
 import { LinkItem } from "~/components/LinkItem";
+
+import getUser from "~/lib/getUser";
 
 export const metadata = {
   title: "Dashboard",
 };
 
 export default async function DashboardPage() {
-  const supabase = createServerComponentSupabaseClient({ headers, cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  const user = session?.user;
+  const user = await getUser();
   if (!user) {
     redirect("/login");
   }

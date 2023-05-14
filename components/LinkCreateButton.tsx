@@ -58,7 +58,7 @@ export function LinkCreateButton({
 
   return (
     <button
-      onClick={() => router.push("/setup")}
+      onClick={() => router.push("/links")}
       className={cn(
         buttonVariants({ variant }),
         {

@@ -2,7 +2,10 @@ import { redirect } from "next/navigation";
 
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
-import { UserNameForm } from "~/components/UserNameForm";
+import { UserNameForm } from "./UserNameForm";
+import getUser from "~/lib/getUser";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 
 export const metadata = {
   title: "Settings",
@@ -10,12 +13,22 @@ export const metadata = {
 };
 
 export default async function SettingsPage() {
-  //   const user = await getCurrentUser();
+  const authUser = await getUser();
+  if (!authUser) {
+    redirect("/login");
+  }
 
-  //   if (!user) {
-  //     redirect(authOptions?.pages?.signIn || "/login");
-  //   }
-  const user = { id: "fake", name: "Faketor Szeto" };
+  const supabase = createServerComponentSupabaseClient({ headers, cookies });
+  const { data: user, error: fetchUsernameError } = await supabase
+    .from("Users")
+    .select("*")
+    .eq("id", authUser.id)
+    .single();
+  console.log(user);
+  if (fetchUsernameError) {
+    redirect("/login");
+  }
+
   return (
     <DashboardShell>
       <DashboardHeader
@@ -23,7 +36,9 @@ export default async function SettingsPage() {
         text="Manage account and website settings."
       />
       <div className="grid gap-10">
-        <UserNameForm user={{ id: user.id, name: user.name || "" }} />
+        <UserNameForm
+          user={{ id: user.id, name: user.name, username: user.username || "" }}
+        />
       </div>
     </DashboardShell>
   );

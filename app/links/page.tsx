@@ -12,12 +12,10 @@ type Props = {};
 
 export default async function Setup({}: Props) {
   const supabase = createServerComponentSupabaseClient({ headers, cookies });
-
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
-  const userId = session?.user.id;
+  const userId = session?.user?.id;
 
   if (!userId) {
     redirect("/");
@@ -38,7 +36,7 @@ export default async function Setup({}: Props) {
     .select("id, title, url")
     .order("id")
     .eq("user_id", userId);
-  console.log(links);
+
   if (fetchLinksError) {
     redirect("/");
   }

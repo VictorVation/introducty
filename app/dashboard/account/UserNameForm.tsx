@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-// import * as z from "zod";
 
 import { cn } from "~/lib/utils";
 
@@ -22,47 +21,38 @@ import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: { id: string; name: string };
+  user: { id: string; name: string; username: string };
 }
 
-type FormData = { name: string };
+type FormData = {
+  username: string;
+};
 
 export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
-  const router = useRouter();
   const {
-    handleSubmit,
     register,
-    formState: { errors },
-  } = useForm<FormData>({
-    // resolver: zodResolver(userNameSchema),
-    defaultValues: {
-      name: user?.name || "",
-    },
-  });
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({ defaultValues: { username: user.username } });
+  const router = useRouter();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
+    const { username } = data;
     setIsSaving(true);
-
-    // const response = await fetch(`/api/users/${user.id}`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: data.name,
-    //   }),
-    // });
-
-    setIsSaving(false);
-
-    // if (!response?.ok) {
-    //   return toast.error( "Something went wrong: Your name was not updated. Please try again.");
-    // }
-
-    toast.success("Your name has been updated.");
-
-    router.refresh();
+    const resp = await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify({ username }),
+    });
+    const json = await resp.json();
+    if (json.error) {
+      toast.error(json.error);
+      setIsSaving(false);
+    } else {
+      router.refresh();
+      setIsSaving(false);
+      toast.success("Updated username!");
+    }
   }
 
   return (
@@ -88,10 +78,12 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
               id="name"
               className="w-[400px]"
               size={32}
-              {...register("name")}
+              {...register("username")}
             />
-            {errors?.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+            {errors?.username && (
+              <p className="px-1 text-xs text-red-600">
+                {errors.username.message}
+              </p>
             )}
           </div>
         </CardContent>

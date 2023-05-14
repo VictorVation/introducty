@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { useSupabase } from "~/app/supabase-provider";
 import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";

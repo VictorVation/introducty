@@ -1,7 +1,7 @@
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { headers, cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: { username: string };
@@ -13,9 +13,6 @@ export default async function CreatorPage({ params: { username } }: Props) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session || !username) {
-    redirect("/");
-  }
   const { data: user, error: fetchUsernameError } = await supabase
     .from("Users")
     .select("*")
@@ -23,7 +20,7 @@ export default async function CreatorPage({ params: { username } }: Props) {
     .single();
 
   if (fetchUsernameError) {
-    redirect("/");
+    return notFound();
   }
 
   const { data: links, error: fetchLinksError } = await supabase
@@ -32,8 +29,9 @@ export default async function CreatorPage({ params: { username } }: Props) {
     .eq("user_id", user.id);
 
   if (fetchLinksError) {
-    redirect("/");
+    return notFound();
   }
+
   return (
     <div className={"mt-36 flex min-h-screen flex-col items-center"}>
       <h1 className={"text-2xl font-bold"}>{username}</h1>
