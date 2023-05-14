@@ -22,7 +22,7 @@ export type SidebarNavItem = {
 
 const SIDE_NAV_ITEMS = [
   {
-    title: "Links",
+    title: "Sites",
     href: "/dashboard",
     icon: FileText,
     disabled: false,

@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   }
   return (
     <DashboardShell>
-      <DashboardHeader heading="Links" text="Create and manage your links.">
+      <DashboardHeader heading="Sites" text="Create and manage your sites.">
         <SiteCreateButton />
       </DashboardHeader>
       <div>
@@ -43,10 +43,10 @@ export default async function DashboardPage() {
         ) : (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>No links created</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>No sites created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any links yet. Create a link in seconds and
-              share it immediately.
+              You don&apos;t have any site yet. Create a site in seconds to
+              start sharing your links immediately.
             </EmptyPlaceholder.Description>
             <SiteCreateButton variant="outline" />
           </EmptyPlaceholder>
