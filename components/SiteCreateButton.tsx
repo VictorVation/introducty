@@ -6,14 +6,15 @@ import { useRouter } from "next/navigation";
 import { cn } from "~/lib/utils";
 import { ButtonProps, buttonVariants } from "~/components/ui/button";
 import { FilePlus, Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
-interface LinkCreateButtonProps extends ButtonProps {}
+interface SiteCreateButtonProps extends ButtonProps {}
 
-export function LinkCreateButton({
+export function SiteCreateButton({
   className,
   variant,
   ...props
-}: LinkCreateButtonProps) {
+}: SiteCreateButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -55,10 +56,28 @@ export function LinkCreateButton({
 
   //     router.push(`/editor/${post.id}`);
   //   }
+  async function createNewSite() {
+    setIsLoading(true);
+    const response = await fetch("/api/sites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        site_name: "NewSiteName",
+      }),
+    });
+    setIsLoading(false);
+    if (!response.ok) {
+      toast.error("Error creating new site. Please try again");
+    }
+    toast.success("Site created!");
+    router.refresh();
+  }
 
   return (
     <button
-      onClick={() => router.push("/links")}
+      onClick={() => createNewSite()}
       className={cn(
         buttonVariants({ variant }),
         {
@@ -74,7 +93,7 @@ export function LinkCreateButton({
       ) : (
         <FilePlus className="mr-2 h-4 w-4" />
       )}
-      New link
+      New site
     </button>
   );
 }

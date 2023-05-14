@@ -1,31 +1,29 @@
 import Link from "next/link";
-
-// import { formatDate } from "@/lib/utils";
 import { Skeleton } from "~/components/ui/skeleton";
-// import { PostOperations } from "@/components/post-operations";
+import { formatDate } from "~/lib/utils";
+import { SitesActions } from "~/components/SitesActions";
 
 interface LinkItemProps {
-  post: { id: string; title: string; createdAt: Date };
+  site: { id: number; site_name: string; created_at: string };
 }
 
-export function LinkItem({ post }: LinkItemProps) {
+export function LinkItem({ site }: LinkItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
         <Link
-          href={`/editor/${post.id}`}
+          href={`/editor/${site.id}`}
           className="font-semibold hover:underline"
         >
-          {post.title}
+          {site.site_name}
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
-            {/* {formatDate(post.createdAt?.toDateString())} */}
-            {post.createdAt?.toDateString()}
+            {formatDate(site.created_at)}
           </p>
         </div>
       </div>
-      {/* <PostOperations post={{ id: post.id, title: post.title }} /> */}
+      <SitesActions site={{ id: site.id, site_name: site.site_name }} />
     </div>
   );
 }

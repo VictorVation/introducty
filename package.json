@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "update-types": "npx supabase gen types typescript --project-id 'yxnqhuopibxjehzdcphe' --schema public > types/supabase.ts && npx better-supabase-types -i ./types/supabase.ts -fs"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-dropdown-menu": "^2.0.4",
     "@radix-ui/react-label": "^2.0.1",

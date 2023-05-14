@@ -36,7 +36,7 @@ export default async function Setup({}: Props) {
     .select("id, title, url")
     .order("id")
     .eq("user_id", userId);
-  console.log(links);
+
   if (fetchLinksError) {
     redirect("/");
   }

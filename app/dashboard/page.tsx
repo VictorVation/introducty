@@ -1,33 +1,43 @@
 import { redirect } from "next/navigation";
-import { LinkCreateButton } from "~/components/LinkCreateButton";
+import { SiteCreateButton } from "~/components/SiteCreateButton";
 import { EmptyPlaceholder } from "~/components/EmptyPlaceholder";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
 import { LinkItem } from "~/components/LinkItem";
 
 import getUser from "~/lib/getUser";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { headers, cookies } from "next/headers";
 
 export const metadata = {
   title: "Dashboard",
 };
 
 export default async function DashboardPage() {
-  const user = await getUser();
-  if (!user) {
+  const authUser = await getUser();
+  if (!authUser) {
     redirect("/login");
   }
-  //   const posts = [{ id: "a", title: "My First Link", createdAt: new Date() }];
-  const posts: Array<{ id: string; title: string; createdAt: Date }> = [];
+
+  const supabase = createServerComponentSupabaseClient({ headers, cookies });
+  const { data: sites, error: fetchSitesError } = await supabase
+    .from("Sites")
+    .select("created_at, site_name, id")
+    .eq("creator_id", authUser.id);
+
+  if (fetchSitesError) {
+    redirect("/login");
+  }
   return (
     <DashboardShell>
       <DashboardHeader heading="Links" text="Create and manage your links.">
-        <LinkCreateButton />
+        <SiteCreateButton />
       </DashboardHeader>
       <div>
-        {posts?.length ? (
+        {sites?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
-              <LinkItem key={post.id} post={post} />
+            {sites.map((site) => (
+              <LinkItem key={site.id} site={site} />
             ))}
           </div>
         ) : (
@@ -38,7 +48,7 @@ export default async function DashboardPage() {
               You don&apos;t have any links yet. Create a link in seconds and
               share it immediately.
             </EmptyPlaceholder.Description>
-            <LinkCreateButton variant="outline" />
+            <SiteCreateButton variant="outline" />
           </EmptyPlaceholder>
         )}
       </div>
