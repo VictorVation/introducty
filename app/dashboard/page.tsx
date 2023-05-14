@@ -17,7 +17,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
   //   const posts = [{ id: "a", title: "My First Link", createdAt: new Date() }];
-  const posts = [];
+  const posts: Array<{ id: string; title: string; createdAt: Date }> = [];
   return (
     <DashboardShell>
       <DashboardHeader heading="Links" text="Create and manage your links.">
