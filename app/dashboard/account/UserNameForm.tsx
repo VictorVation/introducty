@@ -19,7 +19,6 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
-import { fromZodError } from "zod-validation-error";
 import { startTransition } from "react";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
@@ -50,8 +49,8 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
     if (resp.ok) {
       startTransition(() => {
         router.refresh();
+        toast.success("Updated account!");
       });
-      toast.success("Updated account!");
     } else {
       const message = await resp?.text();
       toast.error(message);
@@ -76,6 +75,7 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
               id="name"
               className="w-[400px]"
               size={32}
+              defaultValue={user.name}
               {...register("name")}
             />
             {errors?.name && (
@@ -89,6 +89,7 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
               type="email"
               className="w-[400px]"
               size={32}
+              defaultValue={user.email}
               {...register("email")}
             />
             {errors?.email && (
