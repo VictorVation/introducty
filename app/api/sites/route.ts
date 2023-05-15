@@ -11,6 +11,7 @@ import * as z from "zod";
 import { fromZodError } from "zod-validation-error";
 import getUser from "~/lib/getUser";
 import { Database } from "~/types/supabase";
+import { RequiresProPlanError } from "~/lib/RequiresProPlanError";
 
 // import { RequiresProPlanError } from "@/lib/exceptions";
 // import { getUserSubscriptionPlan } from "@/lib/subscription";
@@ -64,13 +65,16 @@ export async function POST(req: Request) {
 
     // If user is on a free plan.
     // Check if user has reached limit of 3 sites.
-    // if (!subscriptionPlan?.isPro) {
-    //   const count = await supabase.from("sites").select(*).
+    if (!subscriptionPlan?.isPro) {
+      const { count } = await supabase
+        .from("sites")
+        .select("*", { count: "exact" })
+        .eq("creator_id", authUser.id);
 
-    //   if (count >= 3) {
-    //     throw new RequiresProPlanError();
-    //   }
-    // }
+      if (count && count >= 3) {
+        throw new RequiresProPlanError();
+      }
+    }
 
     const json = await req.json();
     const body = siteCreateSchema.parse(json);
@@ -93,9 +97,9 @@ export async function POST(req: Request) {
       return new Response(fromZodError(error).message, { status: 422 });
     }
 
-    // if (error instanceof RequiresProPlanError) {
-    //   return new Response("Requires Pro Plan", { status: 402 });
-    // }
+    if (error instanceof RequiresProPlanError) {
+      return new Response(error.message, { status: 402 });
+    }
 
     return new Response(null, { status: 500 });
   }

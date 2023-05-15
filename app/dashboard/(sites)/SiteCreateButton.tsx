@@ -31,22 +31,13 @@ export function SiteCreateButton({
     });
     setIsLoading(false);
     if (!response.ok) {
-      //     if (!response?.ok) {
-      //       if (response.status === 402) {
-      //         return toast({
-      //           title: "Limit of 3 posts reached.",
-      //           description: "Please upgrade to the PRO plan.",
-      //           variant: "destructive",
-      //         });
-      //       }
+      if (response.status === 402) {
+        return toast.error(await response.text());
+      }
 
-      //       return toast({
-      //         title: "Something went wrong.",
-      //         description: "Your post was not created. Please try again.",
-      //         variant: "destructive",
-      //       });
-      //     }
-      toast.error("Error creating new site. Please try again");
+      return toast.error(
+        "Something went wrong: Your post was not created. Please try again."
+      );
     }
 
     toast.success("Site created!");

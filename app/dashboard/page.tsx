@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { SiteCreateButton } from "~/components/SiteCreateButton";
+import { SiteCreateButton } from "~/app/dashboard/(sites)/SiteCreateButton";
 import { EmptyPlaceholder } from "~/components/EmptyPlaceholder";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
