@@ -1,25 +1,23 @@
 import Link from "next/link";
 import CopyLinkButton from "./CopyLinkButton";
+import { Link as LinkType } from "~/types/supabase";
 
 type Props = {
-  username: string;
-  links: {
-    id: number;
-    url: string;
-    title: string;
-  }[];
+  siteName: string;
+  links?: Array<Pick<LinkType, "id" | "title" | "url">>;
 };
 
-export default function LinksPreviewComponent({ links, username }: Props) {
+export default function LinksPreviewComponent({ links, siteName }: Props) {
+  const renderedLinks = links ?? [];
   return (
     <div className="flex flex-col items-center">
-      <CopyLinkButton username={username} />
+      <CopyLinkButton siteName={siteName} />
       <div
         className="radius-1/2 rounded-3xl p-2 border-8 border-black text-center relative overflow-hidden"
         style={{ height: "844px", width: "390px" }}
       >
         <div className="flex h-full rounded-2xl radius-1/2 w-full flex-col justify-center overflow-y-scroll">
-          {links.map((link) => (
+          {renderedLinks.map((link) => (
             <Link
               className={"w-full rounded-lg border bg-white p-8"}
               key={link.id}

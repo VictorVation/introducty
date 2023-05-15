@@ -9,15 +9,12 @@ import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
+import { Link as LinkType } from "types/supabase";
 
-type Link = {
-  id: number;
-  url: string;
-  title: string;
-};
-
+type EditorLinkType = Pick<LinkType, "id" | "title" | "url">;
 type Props = {
-  links?: Array<Link>;
+  links?: Array<EditorLinkType>;
+  siteId: string;
 };
 
 type Inputs = {
@@ -25,7 +22,7 @@ type Inputs = {
   url: string;
 };
 
-export default function LinksSetupComponent({ links }: Props) {
+export default function LinksSetupComponent({ links, siteId }: Props) {
   const router = useRouter();
   const {
     register,
@@ -39,17 +36,17 @@ export default function LinksSetupComponent({ links }: Props) {
 
   const addLink = async (data: Inputs) => {
     const { url, title } = data;
-    const res = await fetch("/api/links", {
+    const res = await fetch(`/api/links`, {
       method: "POST",
       body: JSON.stringify({
         url,
+        siteId,
         title,
       }),
     });
-    const json = await res.json();
-
-    if (json.error) {
-      toast.error(json.error);
+    if (!res.ok) {
+      if (res.status === 422) return toast.error(await res.text());
+      toast.error("Error, your link was not added. Please try again");
     } else {
       refreshPage();
       reset();
@@ -57,14 +54,15 @@ export default function LinksSetupComponent({ links }: Props) {
     }
   };
 
-  const deleteLink = async (link: Link) => {
+  const deleteLink = async (link: EditorLinkType) => {
     const { id, title, url } = link;
-    const res = await fetch(`/api/links?linkId=${id}`, {
+    const res = await fetch(`/api/links/${id}`, {
       method: "DELETE",
     });
-    const json = await res.json();
-    if (json.error) {
-      toast.error(json.error);
+    console.log(res);
+    if (!res.ok) {
+      if (res.status === 422) return toast.error(await res.text());
+      toast.error("Error, your link was not deleted. Please try again");
     } else {
       refreshPage();
       reset();

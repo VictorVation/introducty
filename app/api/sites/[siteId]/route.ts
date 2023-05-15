@@ -5,6 +5,7 @@ import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { headers, cookies } from "next/headers";
 import getUser from "~/lib/getUser";
 import { Database } from "~/types/supabase";
+import { fromZodError } from "zod-validation-error";
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -20,8 +21,8 @@ export async function DELETE(
     // Validate the route params.
     const { params } = routeContextSchema.parse(context);
 
-    // Check if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.siteId))) {
+    // Check if the user has access to this site.
+    if (!(await verifyCurrentUserHasAccessToSite(params.siteId))) {
       return new Response(null, { status: 403 });
     }
 
@@ -34,7 +35,7 @@ export async function DELETE(
       return new Response(null, { status: 403 });
     }
 
-    // Delete the post.
+    // Delete the site.
     const { error: deleteError } = await supabase
       .from("Sites")
       .delete()
@@ -48,7 +49,7 @@ export async function DELETE(
     return new Response(null, { status: 204 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 });
+      return new Response(fromZodError(error).message, { status: 422 });
     }
 
     return new Response(null, { status: 500 });
@@ -64,7 +65,7 @@ export async function DELETE(
 //     const { params } = routeContextSchema.parse(context);
 
 //     // Check if the user has access to this post.
-//     if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+//     if (!(await verifyCurrentUserHasAccessToSite(params.postId))) {
 //       return new Response(null, { status: 403 });
 //     }
 
@@ -94,7 +95,7 @@ export async function DELETE(
 //   }
 // }
 
-async function verifyCurrentUserHasAccessToPost(siteId: string) {
+export async function verifyCurrentUserHasAccessToSite(siteId: string) {
   const authUser = await getUser();
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,

@@ -1,75 +1,50 @@
+import { z } from "zod";
+import { verifyCurrentUserHasAccessToSite } from "../sites/[siteId]/route";
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { cookies, headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { Database } from "~/types/supabase";
+import { fromZodError } from "zod-validation-error";
+import getUser from "~/lib/getUser";
 
-export async function POST(request: NextRequest) {
-  const supabase = createRouteHandlerSupabaseClient({
-    headers,
-    cookies,
-  });
+const createLinkSchema = z.object({
+  siteId: z.string(),
+  url: z.string().url({
+    message: "Invalid link URL. Make sure to include the http:// or https://",
+  }),
+  title: z.string(),
+});
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json(
-      { error: "You must be logged in to create a link!" },
-      { status: 401 }
-    );
+export async function POST(req: Request) {
+  try {
+    const json = await req.json();
+    const body = createLinkSchema.parse(json);
+    const { url, title, siteId } = body;
+    const authUser = await getUser();
+
+    // Check if the user has access to this post.
+    if (!(await verifyCurrentUserHasAccessToSite(siteId)) || !authUser) {
+      return new Response(null, { status: 403 });
+    }
+
+    const supabase = createRouteHandlerSupabaseClient<Database>({
+      headers,
+      cookies,
+    });
+
+    const link = await supabase.from("Links").insert({
+      url: url,
+      title: title,
+      site_id: siteId,
+      user_id: authUser.id,
+    });
+
+    return new Response(JSON.stringify(link));
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(fromZodError(error).message, { status: 422 });
+    }
+
+    return new Response(null, { status: 500 });
   }
-
-  const body = await request.json();
-  const { url, title } = body;
-
-  if (!url || !title || !user) {
-    return NextResponse.json(
-      { error: "Missing url, or title" },
-      { status: 400 }
-    );
-  }
-
-  const { error: insertError } = await supabase.from("Links").insert({
-    url,
-    title,
-    user_id: user.id,
-  });
-  if (insertError) {
-    return NextResponse.json({ error: insertError.message }, { status: 400 });
-  }
-
-  return NextResponse.json({}, { status: 201 });
-}
-
-export async function DELETE(request: NextRequest) {
-  const supabase = createRouteHandlerSupabaseClient({
-    headers,
-    cookies,
-  });
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json(
-      { error: "You must be logged in to delete a link!" },
-      { status: 401 }
-    );
-  }
-
-  const linkId = request.nextUrl.searchParams.get("linkId");
-
-  if (!linkId) {
-    return NextResponse.json({ error: "Missing link ID" }, { status: 400 });
-  }
-  const { error: deleteError } = await supabase
-    .from("Links")
-    .delete()
-    .eq("user_id", user.id)
-    .eq("id", linkId);
-
-  if (deleteError) {
-    return NextResponse.json({ error: deleteError.message }, { status: 400 });
-  }
-
-  return NextResponse.json({}, { status: 200 });
 }

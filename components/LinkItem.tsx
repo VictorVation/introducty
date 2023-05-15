@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 import { formatDate } from "~/lib/utils";
 import { SitesActions } from "~/components/SitesActions";
+import { Site } from "~/types/supabase";
 
 interface LinkItemProps {
-  site: { id: number; site_name: string; created_at: string };
+  site: Pick<Site, "id" | "site_name" | "created_at">;
 }
 
 export function LinkItem({ site }: LinkItemProps) {

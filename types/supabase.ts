@@ -13,46 +13,46 @@ export interface Database {
         Row: {
           created_at: string | null;
           id: number;
-          site_id: number | null;
-          title: string | null;
-          url: string | null;
-          user_id: string | null;
+          site_id: string;
+          title: string;
+          url: string;
+          user_id: string;
         };
         Insert: {
           created_at?: string | null;
           id?: number;
-          site_id?: number | null;
-          title?: string | null;
-          url?: string | null;
-          user_id?: string | null;
+          site_id: string;
+          title: string;
+          url: string;
+          user_id: string;
         };
         Update: {
           created_at?: string | null;
           id?: number;
-          site_id?: number | null;
-          title?: string | null;
-          url?: string | null;
-          user_id?: string | null;
+          site_id?: string;
+          title?: string;
+          url?: string;
+          user_id?: string;
         };
       };
       Sites: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           creator_id: string | null;
-          id: number;
-          site_name: string | null;
+          id: string;
+          site_name: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           creator_id?: string | null;
-          id?: number;
-          site_name?: string | null;
+          id?: string;
+          site_name: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           creator_id?: string | null;
-          id?: number;
-          site_name?: string | null;
+          id?: string;
+          site_name?: string;
         };
       };
       Users: {

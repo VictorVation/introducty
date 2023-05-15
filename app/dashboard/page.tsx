@@ -26,6 +26,7 @@ export default async function DashboardPage() {
     .eq("creator_id", authUser.id);
 
   if (fetchSitesError) {
+    console.error(fetchSitesError);
     redirect("/login");
   }
   return (
