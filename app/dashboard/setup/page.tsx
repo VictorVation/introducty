@@ -22,7 +22,7 @@ export default async function Setup({}: Props) {
   }
 
   const { data: user, error: fetchUsernameError } = await supabase
-    .from("Users")
+    .from("users")
     .select("*")
     .eq("id", userId)
     .single();
@@ -32,7 +32,7 @@ export default async function Setup({}: Props) {
   }
 
   const { data: links, error: fetchLinksError } = await supabase
-    .from("Links")
+    .from("links")
     .select("id, title, url")
     .order("id")
     .eq("user_id", userId);

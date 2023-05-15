@@ -19,7 +19,6 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context);
     const { linkId } = params;
 
-    // Check if the user has access to this link
     const authUser = await getUser();
     const supabase = createRouteHandlerSupabaseClient<Database>({
       headers,
@@ -30,13 +29,10 @@ export async function DELETE(
     }
 
     const { data, error: deleteError } = await supabase
-      .from("Links")
+      .from("links")
       .delete()
-      .match({
-        id: linkId,
-        user_id: authUser.id,
-      });
-    console.log(data);
+      .eq("id", linkId);
+
     if (deleteError) {
       console.error(deleteError);
       return new Response(null, { status: 500 });

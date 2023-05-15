@@ -57,7 +57,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             event.preventDefault();
 
             await supabase.auth.signOut();
-            router.push("/signin");
+            router.push("/login");
             toast("Signed out!");
           }}
         >

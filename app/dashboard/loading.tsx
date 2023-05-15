@@ -6,7 +6,7 @@ import { SiteCreateButton } from "~/components/SiteCreateButton";
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Links" text="Create and manage posts.">
+      <DashboardHeader heading="links" text="Create and manage posts.">
         <SiteCreateButton />
         Create
       </DashboardHeader>

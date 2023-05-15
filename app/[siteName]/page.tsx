@@ -14,17 +14,17 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
     cookies,
   });
   const { data, error: fetchLinksError } = await supabase
-    .from("Sites")
-    .select("site_name, Links(id, title, url)")
+    .from("sites")
+    .select("site_name, links(id, title, url)")
     .eq("site_name", siteName)
     .single();
   if (fetchLinksError) {
     return notFound();
   }
-  const links = Array.isArray(data.Links)
-    ? data.Links
-    : data.Links != null
-    ? [data.Links]
+  const links = Array.isArray(data.links)
+    ? data.links
+    : data.links != null
+    ? [data.links]
     : [];
   return (
     <div className={"mt-36 flex min-h-screen flex-col items-center"}>

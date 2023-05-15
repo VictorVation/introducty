@@ -35,7 +35,7 @@ export async function PATCH(
 
     // Update the user.
     const { error: updateError } = await supabase
-      .from("Users")
+      .from("users")
       .update({
         name: payload.name,
         email: payload.email,

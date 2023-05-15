@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       cookies,
     });
 
-    const link = await supabase.from("Links").insert({
+    const link = await supabase.from("links").insert({
       url: url,
       title: title,
       site_id: siteId,

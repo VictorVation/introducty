@@ -9,9 +9,8 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      Links: {
+      links: {
         Row: {
-          created_at: string | null;
           id: number;
           site_id: string;
           title: string;
@@ -19,7 +18,6 @@ export interface Database {
           user_id: string;
         };
         Insert: {
-          created_at?: string | null;
           id?: number;
           site_id: string;
           title: string;
@@ -27,7 +25,6 @@ export interface Database {
           user_id: string;
         };
         Update: {
-          created_at?: string | null;
           id?: number;
           site_id?: string;
           title?: string;
@@ -35,7 +32,7 @@ export interface Database {
           user_id?: string;
         };
       };
-      Sites: {
+      sites: {
         Row: {
           created_at: string;
           creator_id: string | null;
@@ -55,24 +52,21 @@ export interface Database {
           site_name?: string;
         };
       };
-      Users: {
+      users: {
         Row: {
           email: string | null;
           id: string;
           name: string | null;
-          updated_at: string | null;
         };
         Insert: {
           email?: string | null;
           id: string;
           name?: string | null;
-          updated_at?: string | null;
         };
         Update: {
           email?: string | null;
           id?: string;
           name?: string | null;
-          updated_at?: string | null;
         };
       };
     };
@@ -91,14 +85,14 @@ export interface Database {
   };
 }
 
-export type Link = Database["public"]["Tables"]["Links"]["Row"];
-export type InsertLink = Database["public"]["Tables"]["Links"]["Insert"];
-export type UpdateLink = Database["public"]["Tables"]["Links"]["Update"];
+export type Link = Database["public"]["Tables"]["links"]["Row"];
+export type InsertLink = Database["public"]["Tables"]["links"]["Insert"];
+export type UpdateLink = Database["public"]["Tables"]["links"]["Update"];
 
-export type Site = Database["public"]["Tables"]["Sites"]["Row"];
-export type InsertSite = Database["public"]["Tables"]["Sites"]["Insert"];
-export type UpdateSite = Database["public"]["Tables"]["Sites"]["Update"];
+export type Site = Database["public"]["Tables"]["sites"]["Row"];
+export type InsertSite = Database["public"]["Tables"]["sites"]["Insert"];
+export type UpdateSite = Database["public"]["Tables"]["sites"]["Update"];
 
-export type User = Database["public"]["Tables"]["Users"]["Row"];
-export type InsertUser = Database["public"]["Tables"]["Users"]["Insert"];
-export type UpdateUser = Database["public"]["Tables"]["Users"]["Update"];
+export type User = Database["public"]["Tables"]["users"]["Row"];
+export type InsertUser = Database["public"]["Tables"]["users"]["Insert"];
+export type UpdateUser = Database["public"]["Tables"]["users"]["Update"];

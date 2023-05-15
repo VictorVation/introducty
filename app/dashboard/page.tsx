@@ -21,7 +21,7 @@ export default async function DashboardPage() {
 
   const supabase = createServerComponentSupabaseClient({ headers, cookies });
   const { data: sites, error: fetchSitesError } = await supabase
-    .from("Sites")
+    .from("sites")
     .select("created_at, site_name, id")
     .eq("creator_id", authUser.id);
 

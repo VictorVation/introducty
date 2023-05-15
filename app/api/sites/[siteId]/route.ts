@@ -37,7 +37,7 @@ export async function DELETE(
 
     // Delete the site.
     const { error: deleteError } = await supabase
-      .from("Sites")
+      .from("sites")
       .delete()
       .eq("creator_id", authUser.id)
       .eq("id", params.siteId);
@@ -105,7 +105,7 @@ export async function verifyCurrentUserHasAccessToSite(siteId: string) {
     return false;
   }
   const { count } = await supabase
-    .from("Sites")
+    .from("sites")
     .select("*", { count: "exact", head: true })
     .match({ creator_id: authUser.id, id: siteId });
 

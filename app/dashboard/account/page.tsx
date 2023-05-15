@@ -20,7 +20,7 @@ export default async function SettingsPage() {
 
   const supabase = createServerComponentSupabaseClient({ headers, cookies });
   const { data: user, error: fetchUsernameError } = await supabase
-    .from("Users")
+    .from("users")
     .select("id, name, email")
     .eq("id", authUser.id)
     .single();

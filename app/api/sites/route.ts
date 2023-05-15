@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     // If user is on a free plan.
     // Check if user has reached limit of 3 sites.
     // if (!subscriptionPlan?.isPro) {
-    //   const count = await supabase.from("Sites").select(*).
+    //   const count = await supabase.from("sites").select(*).
 
     //   if (count >= 3) {
     //     throw new RequiresProPlanError();
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     const json = await req.json();
     const body = siteCreateSchema.parse(json);
 
-    const site = await supabase.from("Sites").insert({
+    const site = await supabase.from("sites").insert({
       site_name: body.site_name,
       creator_id: authUser.id,
     });

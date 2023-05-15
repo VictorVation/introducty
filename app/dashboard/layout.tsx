@@ -20,7 +20,7 @@ export default async function DashboardLayout({
   } = await supabase.auth.getSession();
   const authUser = session?.user;
   const { data: user } = await supabase
-    .from("Users")
+    .from("users")
     .select("id, name, email")
     .eq("id", authUser?.id)
     .single();

@@ -8,7 +8,7 @@ import { cn } from "~/lib/utils";
 import getUser from "~/lib/getUser";
 import LinksSetupComponent from "./LinksSetupComponent";
 import LinksPreviewComponent from "./LinksPreviewComponent";
-import { Site, Link as LinkType, Database } from "~/types/supabase";
+import { Link as LinkType, Database } from "~/types/supabase";
 
 type Props = {
   params: { siteId: string };
@@ -31,19 +31,19 @@ export default async function Setup({ params }: Props) {
     cookies,
   });
   const { data: site, error: fetchSiteLinksError } = await supabase
-    .from("Sites")
-    .select(`site_name, Links(id, title, url)`)
+    .from("sites")
+    .select(`site_name, links(id, title, url)`)
     .eq("id", siteId)
     .single();
 
   if (fetchSiteLinksError) {
     return notFound();
   }
-  const { site_name: siteName, Links: rawLinks } = site;
-  const links = Array.isArray(rawLinks)
-    ? rawLinks
-    : rawLinks != null
-    ? [rawLinks]
+  const { site_name: siteName } = site;
+  const links = Array.isArray(site.links)
+    ? site.links
+    : site.links != null
+    ? [site.links]
     : [];
   return (
     <div className={"grid lg:grid-cols-2 md:grid-cols-1"}>
