@@ -32,7 +32,7 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Sites" text="Create and manage your sites.">
-        <SiteCreateButton />
+        <SiteCreateButton className="" />
       </DashboardHeader>
       <div>
         {sites?.length ? (
