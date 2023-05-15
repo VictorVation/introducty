@@ -3,12 +3,14 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { formatDate } from "~/lib/utils";
 import { SitesActions } from "~/components/SitesActions";
 import { Site } from "~/types/supabase";
+import { link } from "fs";
 
 interface LinkItemProps {
   site: Pick<Site, "id" | "site_name" | "created_at">;
+  linkCount: any;
 }
 
-export function LinkItem({ site }: LinkItemProps) {
+export function LinkItem({ site, linkCount }: LinkItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
@@ -20,7 +22,10 @@ export function LinkItem({ site }: LinkItemProps) {
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
-            {formatDate(site.created_at)}
+            {Number.isFinite(linkCount) && linkCount === 1
+              ? `1 link`
+              : `${linkCount} links`}{" "}
+            &middot; Created {formatDate(site.created_at)}
           </p>
         </div>
       </div>
