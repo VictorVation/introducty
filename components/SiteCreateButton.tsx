@@ -18,44 +18,6 @@ export function SiteCreateButton({
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  //   async function onClick() {
-  //     setIsLoading(true);
-
-  //     const response = await fetch("/api/posts", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title: "Untitled Post",
-  //       }),
-  //     });
-
-  //     setIsLoading(false);
-
-  //     if (!response?.ok) {
-  //       if (response.status === 402) {
-  //         return toast({
-  //           title: "Limit of 3 posts reached.",
-  //           description: "Please upgrade to the PRO plan.",
-  //           variant: "destructive",
-  //         });
-  //       }
-
-  //       return toast({
-  //         title: "Something went wrong.",
-  //         description: "Your post was not created. Please try again.",
-  //         variant: "destructive",
-  //       });
-  //     }
-
-  //     const post = await response.json();
-
-  //     // This forces a cache invalidation.
-  //     router.refresh();
-
-  //     router.push(`/editor/${post.id}`);
-  //   }
   async function createNewSite() {
     setIsLoading(true);
     const response = await fetch("/api/sites", {
@@ -64,13 +26,29 @@ export function SiteCreateButton({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        site_name: "NewSiteName",
+        //
       }),
     });
     setIsLoading(false);
     if (!response.ok) {
+      //     if (!response?.ok) {
+      //       if (response.status === 402) {
+      //         return toast({
+      //           title: "Limit of 3 posts reached.",
+      //           description: "Please upgrade to the PRO plan.",
+      //           variant: "destructive",
+      //         });
+      //       }
+
+      //       return toast({
+      //         title: "Something went wrong.",
+      //         description: "Your post was not created. Please try again.",
+      //         variant: "destructive",
+      //       });
+      //     }
       toast.error("Error creating new site. Please try again");
     }
+
     toast.success("Site created!");
     router.refresh();
   }

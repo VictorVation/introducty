@@ -1,4 +1,11 @@
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import {
+  uniqueNamesGenerator,
+  Config,
+  adjectives,
+  colors,
+  animals,
+} from "unique-names-generator";
 import { headers, cookies } from "next/headers";
 import * as z from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -9,7 +16,7 @@ import { Database } from "~/types/supabase";
 // import { getUserSubscriptionPlan } from "@/lib/subscription";
 
 const siteCreateSchema = z.object({
-  site_name: z.string().min(6, { message: "Must be 6" }).trim(),
+  site_name: z.string().min(6, { message: "Must be 6" }).trim().optional(),
   // content: z.string().optional(),
 });
 
@@ -68,8 +75,15 @@ export async function POST(req: Request) {
     const json = await req.json();
     const body = siteCreateSchema.parse(json);
 
+    const siteName =
+      body.site_name ??
+      uniqueNamesGenerator({
+        dictionaries: [adjectives, colors, animals],
+        style: "capital",
+        separator: "",
+      });
     const site = await supabase.from("sites").insert({
-      site_name: body.site_name,
+      site_name: siteName,
       creator_id: authUser.id,
     });
 
