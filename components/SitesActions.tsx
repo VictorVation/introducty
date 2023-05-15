@@ -25,7 +25,7 @@ import {
 import toast from "react-hot-toast";
 import { MoreVertical, Loader2, Trash2 } from "lucide-react";
 
-async function deletePost(siteId: number) {
+async function deletePost(siteId: string) {
   const response = await fetch(`/api/sites/${siteId}`, {
     method: "DELETE",
   });
