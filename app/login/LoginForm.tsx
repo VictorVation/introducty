@@ -42,7 +42,7 @@ export default function LoginForm() {
           },
         },
       }}
-      providers={[]}
+      providers={["facebook", "google"]}
     />
   );
 }
