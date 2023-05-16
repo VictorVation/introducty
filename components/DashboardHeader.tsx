@@ -10,8 +10,8 @@ export function DashboardHeader({
   children,
 }: DashboardHeaderProps) {
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
-      <div className="grid gap-1">
+    <div className="grid md:grid-cols-3 grid-cols-1 gap-2">
+      <div className="grid gap-1 md:col-span-2">
         <h1 className="font-heading font-bold text-3xl md:text-4xl">
           {heading}
         </h1>
