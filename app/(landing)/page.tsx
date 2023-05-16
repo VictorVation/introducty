@@ -41,8 +41,8 @@ export default async function IndexPage() {
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
             Launch your page faster than you can say &ldquo;link in bio&rdquo;.
-            With our streamlined app, add your links and branding take just a
-            few clicks. Plus, our beautifully minimal design ensures your
+            With our streamlined designer, adding your links and branding take
+            just a few clicks. Plus, our beautifully minimal design ensures your
             content takes center stage.
           </p>
         </div>
