@@ -17,7 +17,7 @@ export function DashboardHeader({
         </h1>
         {text && <p className="text-lg text-muted-foreground">{text}</p>}
       </div>
-      <div className="lg:justify-self-end my-auto">{children}</div>
+      <div className="md:justify-self-end my-auto">{children}</div>
     </div>
   );
 }
