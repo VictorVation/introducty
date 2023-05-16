@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "~/lib/utils";
+import { ModeToggle } from "./ModeToggle";
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
@@ -9,6 +10,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           &copy; {new Date().getFullYear()} Introducty.
         </div>
+        <ModeToggle />
       </div>
     </footer>
   );

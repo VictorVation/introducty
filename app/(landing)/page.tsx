@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 export default async function IndexPage() {
@@ -8,21 +8,22 @@ export default async function IndexPage() {
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <h1 className="font-heading font-semibold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            <span className="underline decoration-teal-300">Introducty</span> is
-            the simplest way to add your link in bio.
+            Introducty is the{" "}
+            <span className="underline decoration-teal-300">simplest</span> way
+            to add your link in bio.
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             Create your hand-crafted, artisanal, small batch link in bio in
             seconds.
           </p>
           <div className="space-x-4">
-            <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
-              Get Started Now
+            <Link href="/login">
+              <Button size="lg">Get Started Now</Button>
             </Link>
           </div>
         </div>
       </section>
-      {/* <section
+      <section
         id="features"
         className="container space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24"
       >
@@ -130,7 +131,7 @@ export default async function IndexPage() {
           </p>
         </div>
       </section>
-      <section id="open-source" className="container py-8 md:py-12 lg:py-24">
+      {/* <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Proudly Open Source

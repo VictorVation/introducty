@@ -3,10 +3,11 @@ import { Inter, Manrope } from "next/font/google";
 import SupabaseProvider from "~/app/supabase-provider";
 import { Toaster } from "react-hot-toast";
 import { cn } from "~/lib/utils";
+import { ThemeProvider } from "~/components/ThemeProvider";
 
 export const metadata = {
   title: {
-    default: "Introducty ⚡ The fastest way to put your link in bio",
+    default: "Introducty - The fastest way to put your link in bio",
     template: `%s | Introducty`,
   },
   description: "Introducty is the fastest way to add your link in bio.",
@@ -36,10 +37,12 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <main className="container">
-          <SupabaseProvider session={null}>{children}</SupabaseProvider>
-          <Toaster />
-        </main>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <main className="container">
+            <SupabaseProvider session={null}>{children}</SupabaseProvider>
+            <Toaster />
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

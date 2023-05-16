@@ -68,6 +68,16 @@
 
     --radius: 0.5rem;
   }
+
+  button {
+    user-select: none;
+  }
+  ::selection {
+    @apply bg-teal-100;
+  }
+  .dark ::selection {
+    @apply bg-teal-900;
+  }
 }
 
 @layer base {
@@ -77,9 +87,5 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  ::selection {
-    @apply bg-teal-100;
   }
 }
