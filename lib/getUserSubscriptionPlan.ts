@@ -32,7 +32,7 @@ export async function getUserSubscriptionPlan(
   return {
     ...plan,
     // ...user,
-    stripeCurrentPeriodEnd: new Date("2023-12-31"),
+    stripeCurrentPeriodEnd: 123,
   };
   //   return {
   //     ...plan,

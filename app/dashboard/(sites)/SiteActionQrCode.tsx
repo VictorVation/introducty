@@ -1,7 +1,7 @@
 "use client";
 
-import { DialogClose } from "@radix-ui/react-dialog";
-import { QrCodeIcon } from "lucide-react";
+import { DialogClose, DialogDescription } from "@radix-ui/react-dialog";
+import { DownloadCloudIcon, QrCodeIcon } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import QRCode from "react-qr-code";
-import { useRef } from "react";
+import { SyntheticEvent, useRef, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -22,29 +22,33 @@ type Props = {
 
 export default function SiteActionQrCode({ siteName }: Props) {
   const qrRef = useRef(null);
-  function downloadSVG() {
-    const svg = qrRef.current;
-    if (!svg) {
-      toast.error("Error saving QR code. Please refresh and try again");
-      return;
-    }
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.onload = () => {
-      if (ctx) {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const pngFile = canvas.toDataURL("image/png");
-        const downloadLink = document.createElement("a");
-        downloadLink.download = `${siteName}-QRCode`;
-        downloadLink.href = `${pngFile}`;
-        downloadLink.click();
+  const [isPending, startTransition] = useTransition();
+  async function downloadSVG(e: SyntheticEvent) {
+    e.preventDefault();
+    startTransition(() => {
+      const svg = qrRef.current;
+      if (!svg) {
+        toast.error("Error saving QR code. Please refresh and try again");
+        return;
       }
-    };
-    img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.onload = () => {
+        if (ctx) {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const pngFile = canvas.toDataURL("image/png");
+          const downloadLink = document.createElement("a");
+          downloadLink.download = `${siteName}-QRCode`;
+          downloadLink.href = `${pngFile}`;
+          downloadLink.click();
+        }
+      };
+      img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+    });
   }
   return (
     <Dialog>
@@ -57,6 +61,7 @@ export default function SiteActionQrCode({ siteName }: Props) {
         <DialogHeader>
           <DialogTitle>{siteName} QR Code</DialogTitle>
         </DialogHeader>
+        <DialogDescription>{`${process.env.NEXT_PUBLIC_BASE_URL}/${siteName}`}</DialogDescription>
         <div className="p-4 bg-white">
           <QRCode
             ref={qrRef}
@@ -67,7 +72,8 @@ export default function SiteActionQrCode({ siteName }: Props) {
           />
         </div>
         <DialogFooter className="gap-1">
-          <Button size="sm" onClick={downloadSVG}>
+          <Button size="sm" onClick={async (e) => downloadSVG(e)}>
+            <DownloadCloudIcon className="pr-2" />
             Download
           </Button>
           <DialogClose asChild>

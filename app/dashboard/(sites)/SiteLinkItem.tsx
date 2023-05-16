@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
-import { formatDate } from "~/lib/utils";
+import { cn, formatDate } from "~/lib/utils";
 import { SiteLinkMoreActions } from "~/app/dashboard/(sites)/SiteLinkMoreActions";
 import { Site } from "~/types/supabase";
 import SiteActionCopyLink from "./SiteActionCopyLink";
 import SiteActionQrCode from "./SiteActionQrCode";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { PencilIcon } from "lucide-react";
 
 interface LinkItemProps {
   site: Pick<Site, "id" | "site_name" | "created_at">;
@@ -31,6 +33,13 @@ export function LinkItem({ site, linkCount }: LinkItemProps) {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
+          <Link
+            href={`/editor/${site.id}`}
+            className={cn(buttonVariants({ size: "sm" }))}
+          >
+            <PencilIcon className="pr-2" />
+            Edit Site
+          </Link>
           <SiteActionCopyLink siteName={siteName} />
           <SiteActionQrCode siteName={siteName} />
         </div>
