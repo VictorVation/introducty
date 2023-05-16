@@ -39,11 +39,11 @@ async function deletePost(siteId: string) {
   return true;
 }
 
-interface SitesActionsProps {
+interface SiteLinkMoreActionsProps {
   site: Pick<Site, "id" | "site_name">;
 }
 
-export function SitesActions({ site }: SitesActionsProps) {
+export function SiteLinkMoreActions({ site }: SiteLinkMoreActionsProps) {
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);

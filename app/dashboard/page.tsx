@@ -3,7 +3,7 @@ import { SiteCreateButton } from "~/app/dashboard/(sites)/SiteCreateButton";
 import { EmptyPlaceholder } from "~/components/EmptyPlaceholder";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
-import { LinkItem } from "~/components/LinkItem";
+import { LinkItem } from "~/app/dashboard/(sites)/SiteLinkItem";
 
 import getUser from "~/lib/getUser";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";

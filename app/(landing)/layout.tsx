@@ -4,7 +4,6 @@ import { cn } from "~/lib/utils";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { MainNav } from "~/components/MainNav";
 import { SiteFooter } from "~/components/SiteFooter";
-import { UserAccountNav } from "~/components/UserAccountNav";
 import getUser from "~/lib/getUser";
 
 interface LandingLayoutProps {
