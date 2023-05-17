@@ -5,7 +5,7 @@ import { fromZodError } from "zod-validation-error";
 
 import { Database } from "~/types/supabase";
 
-export const userNameSchema = z.object({
+const userNameSchema = z.object({
   name: z.string().min(3).max(32),
   email: z.string().email(),
 });
