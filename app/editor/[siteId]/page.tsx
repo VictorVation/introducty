@@ -46,7 +46,13 @@ export default async function Setup({ params }: Props) {
     ? [site.links]
     : [];
   return (
-    <div className={"grid lg:grid-cols-2 md:grid-cols-1"}>
+    <div
+      className={
+        "pt-20 grid lg:grid-cols-2 md:grid-cols-1 max-w-screen-lg mx-auto"
+      }
+    >
+      <LinksSetupComponent siteId={siteId} links={links} />
+      <LinksPreviewComponent siteName={siteName} links={links} />
       <Link
         href="/dashboard"
         className={cn(
@@ -59,8 +65,6 @@ export default async function Setup({ params }: Props) {
           Back
         </>
       </Link>
-      <LinksSetupComponent siteId={siteId} links={links} />
-      <LinksPreviewComponent siteName={siteName} links={links} />
     </div>
   );
 }
