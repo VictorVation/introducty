@@ -1,11 +1,17 @@
+import { Link, ChevronLeft, ChevronLeftIcon } from "lucide-react";
+import { SiteFooter } from "~/components/SiteFooter";
+import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
+
 interface EditorProps {
   children?: React.ReactNode;
 }
 
 export default function EditorLayout({ children }: EditorProps) {
   return (
-    <div className="container mx-auto grid items-start gap-10 py-8">
+    <>
       {children}
-    </div>
+      <SiteFooter className="border-t" />
+    </>
   );
 }

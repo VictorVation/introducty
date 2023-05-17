@@ -86,7 +86,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
 
   return (
     <div>
-      <div className={"m-8 w-full rounded-lg border bg-white p-8"}>
+      <div className={"m-8 w-full rounded-lg border bg-background p-8"}>
         <p className={"text-4xl"}>Enter URL and Title</p>
         <form
           className="flex flex-col gap-4 pt-4"
@@ -137,7 +137,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
         <div
           key={link.id}
           className={
-            "m-8 flex w-full justify-between rounded-lg border bg-white p-8"
+            "m-8 flex w-full justify-between rounded-lg border bg-background p-8"
           }
         >
           <div>
