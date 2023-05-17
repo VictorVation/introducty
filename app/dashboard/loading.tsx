@@ -6,7 +6,7 @@ import { SiteCreateButton } from "~/app/dashboard/(sites)/SiteCreateButton";
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="links" text="Create and manage posts.">
+      <DashboardHeader heading="Links" text="Create and manage your sites.">
         <SiteCreateButton />
       </DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border">

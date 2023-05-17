@@ -34,8 +34,8 @@ const SIDE_NAV_ITEMS = [
     disabled: false,
   },
   {
-    title: "Account",
-    href: "/dashboard/account",
+    title: "Settings",
+    href: "/dashboard/settings",
     icon: Settings,
     disabled: false,
   },
