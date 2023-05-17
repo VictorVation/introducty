@@ -3,8 +3,12 @@ import { cookies, headers } from "next/headers";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 
-import { userNameSchema } from "~/lib/validations/user";
 import { Database } from "~/types/supabase";
+
+export const userNameSchema = z.object({
+  name: z.string().min(3).max(32),
+  email: z.string().email(),
+});
 
 const routeContextSchema = z.object({
   params: z.object({
