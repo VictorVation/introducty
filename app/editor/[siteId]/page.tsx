@@ -6,8 +6,8 @@ import Link from "next/link";
 import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import getUser from "~/lib/getUser";
-import LinksSetupComponent from "./LinksSetupComponent";
-import LinksPreviewComponent from "./LinksPreviewComponent";
+import AddLinkCard from "./AddLinkCard";
+import LinksPreview from "./LinksPreview";
 import { Link as LinkType, Database } from "~/types/supabase";
 
 type Props = {
@@ -48,11 +48,11 @@ export default async function Setup({ params }: Props) {
   return (
     <div
       className={
-        "mx-auto grid max-w-screen-lg pt-20 md:grid-cols-1 lg:grid-cols-2"
+        "mx-auto grid max-w-screen-lg gap-8 pt-20 md:grid-cols-1 lg:grid-cols-2"
       }
     >
-      <LinksSetupComponent siteId={siteId} links={links} />
-      <LinksPreviewComponent siteName={siteName} links={links} />
+      <AddLinkCard siteId={siteId} links={links} />
+      <LinksPreview siteName={siteName} links={links} />
       <Link
         href="/dashboard"
         className={cn(

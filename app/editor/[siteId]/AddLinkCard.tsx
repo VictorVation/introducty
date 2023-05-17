@@ -37,7 +37,7 @@ type Inputs = {
   url: string;
 };
 
-export default function LinksSetupComponent({ links, siteId }: Props) {
+export default function AddLinkCard({ links, siteId }: Props) {
   const router = useRouter();
   const {
     register,
