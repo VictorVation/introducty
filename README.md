@@ -4,12 +4,19 @@ Introducty is the fastest way to make a landing page. Create a beautiful, blazin
 
 ## Development
 
-Built with NextJS 13 + TailwindCSS + Supabase, deployed on Vercel.
+Built with NextJS 13 + TailwindCSS + Supabase.
 
 ```sh
 npm install
 npm run dev
 ```
+
+Deployed on Vercel
+```sh
+npm run lint
+git push 
+```
+
 
 ## Database
 
