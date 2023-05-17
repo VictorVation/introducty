@@ -37,9 +37,9 @@ export default function SiteActionQrCode({ siteName }: Props) {
       const img = new Image();
       img.onload = () => {
         if (ctx) {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
+          canvas.width = img.width + 32;
+          canvas.height = img.height + 32;
+          ctx.drawImage(img, 16, 16);
           const pngFile = canvas.toDataURL("image/png");
           const downloadLink = document.createElement("a");
           downloadLink.download = `${siteName}-QRCode`;
@@ -48,6 +48,7 @@ export default function SiteActionQrCode({ siteName }: Props) {
         }
       };
       img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+      console.log(img.src);
     });
   }
   return (
