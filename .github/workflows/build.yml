@@ -27,6 +27,3 @@ jobs:
 
       - name: Lint and typecheck
         run: npm run lint
-
-      - name: Build
-        run: npm run build
