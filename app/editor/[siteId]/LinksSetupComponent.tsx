@@ -166,7 +166,10 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
               {(links ?? []).map((link) => {
                 const { id, title, url } = link;
                 return (
-                  <div className="flex items-center justify-between flex-col sm:flex-row gap-2 p-4 rounded-lg border bg-background">
+                  <div
+                    className="flex items-center justify-between flex-col sm:flex-row gap-2 p-4 rounded-lg border bg-background"
+                    key={id}
+                  >
                     <div className="flex flex-col gap-4">
                       <div>
                         <p className="text-sm font-medium leading-none">
