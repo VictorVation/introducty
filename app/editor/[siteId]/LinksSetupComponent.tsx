@@ -24,6 +24,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
+import { useState } from "react";
 
 type EditorLinkType = Pick<LinkType, "id" | "title" | "url">;
 type Props = {
@@ -45,6 +46,8 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
     formState: { errors },
     formState: { isSubmitting },
   } = useForm<Inputs>();
+
+  const [isShowLinks, setIsShowLinks] = useState(true);
 
   const refreshPage = () => router.refresh();
 
@@ -143,11 +146,15 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
             </Button>
           </form>
           <Separator />
-          <Collapsible className="grid gap-2">
+          <Collapsible
+            className="grid gap-2"
+            open={isShowLinks}
+            onOpenChange={setIsShowLinks}
+          >
             <CollapsibleTrigger asChild>
               <div className="flex items-center justify-between space-x-4 px-4 bg-muted rounded-lg border cursor-pointer">
                 <h4 className="text-sm font-semibold">
-                  {links?.length ?? 0} Links
+                  {isShowLinks ? "Hide" : "Show"} {links?.length ?? 0} Links
                 </h4>
                 <Button variant="ghost" size="sm" className="w-9 p-0">
                   <ChevronsUpDownIcon className="h-4 w-4" />
@@ -169,11 +176,11 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
                       </div>
                     </div>
                     <Button
-                      variant="destructive"
+                      variant="ghost"
                       size="sm"
                       onClick={() => deleteLink(link)}
                     >
-                      <X className="h-6 w-6" />
+                      <X className="h-6 w-6 text-destructive" />
                     </Button>
                   </div>
                 );
