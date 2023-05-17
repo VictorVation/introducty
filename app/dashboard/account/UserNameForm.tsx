@@ -68,7 +68,7 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
           <CardTitle>Account</CardTitle>
           <CardDescription>Update your account details</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 w-full">
+        <CardContent className="grid w-full gap-4">
           <div className="grid gap-1.5">
             <Label htmlFor="name">Name</Label>
             <Input

@@ -26,7 +26,7 @@ export default function Header() {
   return (
     <header
       className={
-        "flex justify-between items-center p-4 m-8 border-2 border-black rounded-full"
+        "m-8 flex items-center justify-between rounded-full border-2 border-black p-4"
       }
     >
       <Link href="/setup" aria-label="My projects">

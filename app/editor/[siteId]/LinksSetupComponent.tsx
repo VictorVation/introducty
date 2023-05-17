@@ -87,7 +87,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
         <span>
           Deleted {link.title}.{" "}
           <a
-            className="underline text-brand-500 cursor-pointer"
+            className="text-brand-500 cursor-pointer underline"
             onClick={() => {
               addLink({ title, url });
               toast.dismiss(title);
@@ -108,7 +108,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
           <CardTitle>Add Links</CardTitle>
           <CardDescription>Enter a title and URL.</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 w-full">
+        <CardContent className="grid w-full gap-4">
           <form
             className="flex flex-col gap-4 pt-4"
             onSubmit={handleSubmit(addLink)}
@@ -152,7 +152,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
             onOpenChange={setIsShowLinks}
           >
             <CollapsibleTrigger asChild>
-              <div className="flex items-center justify-between space-x-4 px-4 bg-muted rounded-lg border cursor-pointer">
+              <div className="flex cursor-pointer items-center justify-between space-x-4 rounded-lg border bg-muted px-4">
                 <h4 className="text-sm font-semibold">
                   {isShowLinks ? "Hide" : "Show"} {links?.length ?? 0} Links
                 </h4>
@@ -167,7 +167,7 @@ export default function LinksSetupComponent({ links, siteId }: Props) {
                 const { id, title, url } = link;
                 return (
                   <div
-                    className="flex items-center justify-between flex-col sm:flex-row gap-2 p-4 rounded-lg border bg-background"
+                    className="flex flex-col items-center justify-between gap-2 rounded-lg border bg-background p-4 sm:flex-row"
                     key={id}
                   >
                     <div className="flex flex-col gap-4">

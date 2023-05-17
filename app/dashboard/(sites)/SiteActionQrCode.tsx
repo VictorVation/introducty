@@ -63,7 +63,7 @@ export default function SiteActionQrCode({ siteName }: Props) {
           <DialogTitle>{siteName} QR Code</DialogTitle>
         </DialogHeader>
         <DialogDescription>{`${process.env.NEXT_PUBLIC_BASE_URL}/${siteName}`}</DialogDescription>
-        <div className="p-4 bg-white">
+        <div className="bg-white p-4">
           <QRCode
             ref={qrRef}
             size={256}

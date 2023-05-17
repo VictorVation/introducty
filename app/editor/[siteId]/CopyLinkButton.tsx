@@ -20,7 +20,7 @@ export default function CopyLinkButton({ siteName }: Props) {
         toast.success("Link copied!", { id: "clipboard" });
       }}
     >
-      <p className="text-lg font-bold mr-2">{`${process.env.NEXT_PUBLIC_BASE_URL}/${siteName}`}</p>
+      <p className="mr-2 text-lg font-bold">{`${process.env.NEXT_PUBLIC_BASE_URL}/${siteName}`}</p>
       <Button>
         <ClipboardCopy className="pr-2" /> Copy Link
       </Button>

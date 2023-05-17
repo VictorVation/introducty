@@ -48,7 +48,7 @@ export default async function Setup({ params }: Props) {
   return (
     <div
       className={
-        "pt-20 grid lg:grid-cols-2 md:grid-cols-1 max-w-screen-lg mx-auto"
+        "mx-auto grid max-w-screen-lg pt-20 md:grid-cols-1 lg:grid-cols-2"
       }
     >
       <LinksSetupComponent siteId={siteId} links={links} />

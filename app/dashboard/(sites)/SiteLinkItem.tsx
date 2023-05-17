@@ -16,7 +16,7 @@ interface LinkItemProps {
 export function LinkItem({ site, linkCount }: LinkItemProps) {
   const { site_name: siteName, created_at: createdAt } = site;
   return (
-    <div className="flex items-center justify-between flex-col sm:flex-row gap-2 p-4">
+    <div className="flex flex-col items-center justify-between gap-2 p-4 sm:flex-row">
       <div className="flex flex-col gap-4">
         <div>
           <Link
@@ -32,7 +32,7 @@ export function LinkItem({ site, linkCount }: LinkItemProps) {
             &middot; Created {formatDate(createdAt)}
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <Link
             href={`/editor/${site.id}`}
             className={cn(buttonVariants({ size: "sm" }))}

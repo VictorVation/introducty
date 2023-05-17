@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <div className="min-h-screen">
-      <div className="container flex h-screen lg:w-screen  flex-col items-center justify-center overflow-hidden">
+      <div className="container flex h-screen flex-col  items-center justify-center overflow-hidden lg:w-screen">
         <Link
           href="/"
           className={cn(
