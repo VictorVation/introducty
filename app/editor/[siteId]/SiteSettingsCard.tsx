@@ -10,22 +10,8 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Site as SiteType } from "types/supabase";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "~/components/ui/collapsible";
+import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { useContext, useState } from "react";
-import { cn } from "~/lib/utils";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import {
   Popover,
@@ -124,7 +110,7 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
                   {...backgroundColorFields}
                 />
                 <Popover>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-auto bg-background p-2">
                     <HexColorPicker
                       color={watch("backgroundColor")}
                       onChange={(color) => {

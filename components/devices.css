@@ -11,7 +11,7 @@
 
 .device {
   position: relative;
-  transform: scale(1);
+  transform: scale(0.8);
   z-index: 1;
 }
 

@@ -48,28 +48,30 @@ export default async function Editor({ params }: Props) {
     ? [site.links]
     : [];
   return (
-    <div
-      className={
-        "mx-auto grid max-w-screen-lg gap-8 pt-20 md:grid-cols-1 lg:grid-cols-2"
-      }
-    >
-      <EditorContextProvider>
-        <SiteSettingsCard siteId={siteId} siteName={siteName} />
-        <AddLinkCard siteId={siteId} links={links} />
-        <LinksPreview siteName={siteName} links={links} />
-        <Link
-          href="/dashboard"
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute left-4 top-4 md:left-8 md:top-8"
-          )}
-        >
-          <>
-            <ChevronLeft className="mr-2 h-4 w-4" />
-            Back
-          </>
-        </Link>
-      </EditorContextProvider>
-    </div>
+    <EditorContextProvider>
+      <div
+        className={" mx-auto flex max-w-screen-xl justify-between gap-2 py-20 "}
+      >
+        <div className="mx-auto grid grid-cols-1 gap-4 xl:grid-flow-col xl:grid-cols-2">
+          <SiteSettingsCard siteId={siteId} siteName={siteName} />
+          <AddLinkCard siteId={siteId} links={links} />
+        </div>
+        <div className="mx-auto">
+          <LinksPreview siteName={siteName} links={links} />
+        </div>
+      </div>
+      <Link
+        href="/dashboard"
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "absolute left-4 top-4 md:left-8 md:top-8"
+        )}
+      >
+        <>
+          <ChevronLeft className="mr-2 h-4 w-4" />
+          Back
+        </>
+      </Link>
+    </EditorContextProvider>
   );
 }

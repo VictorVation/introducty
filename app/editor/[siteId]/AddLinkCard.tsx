@@ -102,7 +102,7 @@ export default function AddLinkCard({ links, siteId }: Props) {
   };
 
   return (
-    <div>
+    <div className="row-span-2">
       <Card>
         <CardHeader className="pb-2">
           <CardTitle>Add Links</CardTitle>
@@ -147,7 +147,7 @@ export default function AddLinkCard({ links, siteId }: Props) {
           </form>
           <Separator />
           <Collapsible
-            className="grid gap-2"
+            className="grid w-full gap-2"
             open={isShowLinks}
             onOpenChange={setIsShowLinks}
           >
@@ -175,7 +175,11 @@ export default function AddLinkCard({ links, siteId }: Props) {
                         <p className="text-sm font-medium leading-none">
                           {title}
                         </p>
-                        <p className="text-sm text-muted-foreground">{url}</p>
+                        <p className="break-all text-sm text-muted-foreground">
+                          {url
+                            .replace(/^(https?:|)\/\/(www\.?)?/, "")
+                            .replace(/\?.*$/, "")}
+                        </p>
                       </div>
                     </div>
                     <Button
