@@ -191,7 +191,6 @@ export default function AddLinkCard({ links, siteId }: Props) {
             </CollapsibleContent>
           </Collapsible>
         </CardContent>
-        <CardFooter></CardFooter>
       </Card>
       {/* {(links ?? []).map((link) => (
         <div

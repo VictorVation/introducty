@@ -8,20 +8,22 @@ import { cn } from "~/lib/utils";
 import getUser from "~/lib/getUser";
 import AddLinkCard from "./AddLinkCard";
 import LinksPreview from "./LinksPreview";
-import { Link as LinkType, Database } from "~/types/supabase";
+import { Database } from "~/types/supabase";
+import SiteSettingsCard from "./SiteSettingsCard";
+import React from "react";
+import { EditorContextProvider } from "./EditorContext";
 
 type Props = {
   params: { siteId: string };
 };
 
-export default async function Setup({ params }: Props) {
+export default async function Editor({ params }: Props) {
   const authUser = await getUser();
   if (!authUser) {
     redirect("/login");
   }
 
   const { siteId } = params;
-
   if (!siteId) {
     redirect("/dashboard");
   }
@@ -51,20 +53,23 @@ export default async function Setup({ params }: Props) {
         "mx-auto grid max-w-screen-lg gap-8 pt-20 md:grid-cols-1 lg:grid-cols-2"
       }
     >
-      <AddLinkCard siteId={siteId} links={links} />
-      <LinksPreview siteName={siteName} links={links} />
-      <Link
-        href="/dashboard"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-4 top-4 md:left-8 md:top-8"
-        )}
-      >
-        <>
-          <ChevronLeft className="mr-2 h-4 w-4" />
-          Back
-        </>
-      </Link>
+      <EditorContextProvider>
+        <SiteSettingsCard siteId={siteId} siteName={siteName} />
+        <AddLinkCard siteId={siteId} links={links} />
+        <LinksPreview siteName={siteName} links={links} />
+        <Link
+          href="/dashboard"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "absolute left-4 top-4 md:left-8 md:top-8"
+          )}
+        >
+          <>
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back
+          </>
+        </Link>
+      </EditorContextProvider>
     </div>
   );
 }
