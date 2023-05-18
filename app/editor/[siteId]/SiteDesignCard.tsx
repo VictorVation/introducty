@@ -1,17 +1,11 @@
 "use client";
 
-import {
-  X,
-  Loader2,
-  ChevronsUpDownIcon,
-  Palette,
-  ClipboardCopy,
-  AlertCircle,
-} from "lucide-react";
+import { Loader2, Palette, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Badge } from "~/components/ui/badge";
 
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
@@ -105,10 +99,19 @@ export default function SiteDesignCard({ siteId }: Props) {
             onSubmit={handleSubmit(updateSiteDesign)}
           >
             <Tabs defaultValue="gradient">
-              <TabsList>
-                <TabsTrigger value="gradient">Gradient</TabsTrigger>
-                <TabsTrigger value="solid">Color</TabsTrigger>
-                <TabsTrigger value="image">Image</TabsTrigger>
+              <TabsList className="w-full">
+                <TabsTrigger className="w-full" value="gradient">
+                  Gradient
+                </TabsTrigger>
+                <TabsTrigger className="w-full" value="solid">
+                  Color
+                </TabsTrigger>
+                <TabsTrigger className="w-full" value="image">
+                  <Badge className="mr-2 " variant="outline">
+                    PRO
+                  </Badge>
+                  Image
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="gradient">
                 <div className="grid w-full items-center gap-1.5">

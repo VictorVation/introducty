@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  X,
-  Loader2,
-  ChevronsUpDownIcon,
-  Palette,
-  ClipboardCopy,
-} from "lucide-react";
+import { Loader2, ClipboardCopy } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
@@ -16,19 +10,15 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Site as SiteType } from "types/supabase";
-import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
-import { useContext, useState } from "react";
-import { HexColorInput, HexColorPicker } from "react-colorful";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
-import { validHex } from "~/lib/validateHex";
-import { EditorContext } from "./EditorContext";
-import { cva } from "class-variance-authority";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { cn } from "~/lib/utils";
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "~/components/ui/card";
+import { Switch } from "~/components/ui/switch";
+import { Badge } from "~/components/ui/badge";
 
 type Props = {
   siteId: string;
@@ -70,7 +60,9 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle>Site Settings</CardTitle>
-          {/* <CardDescription>Enter a title and URL.</CardDescription> */}
+          <CardDescription>
+            Configure your site's name and settings.
+          </CardDescription>
         </CardHeader>
         <CardContent className="grid w-full gap-4">
           <form
@@ -113,6 +105,18 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
               )}
             </div>
 
+            <div className="flex items-center space-x-2">
+              <Switch id="hide-branding" disabled />
+              <Label
+                htmlFor="hide-branding"
+                className="text-secondary-foreground"
+              >
+                <Badge className="mr-2" variant="outline">
+                  PRO
+                </Badge>
+                Hide &ldquo;Powered by Introducty&rdquo;
+              </Label>
+            </div>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
