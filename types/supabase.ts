@@ -32,22 +32,48 @@ export interface Database {
           user_id?: string;
         };
       };
+      site_design: {
+        Row: {
+          background_type: string;
+          gradient_id: number | null;
+          id: number;
+          image_url: string | null;
+          solid: string | null;
+        };
+        Insert: {
+          background_type?: string;
+          gradient_id?: number | null;
+          id?: number;
+          image_url?: string | null;
+          solid?: string | null;
+        };
+        Update: {
+          background_type?: string;
+          gradient_id?: number | null;
+          id?: number;
+          image_url?: string | null;
+          solid?: string | null;
+        };
+      };
       sites: {
         Row: {
           created_at: string;
           creator_id: string | null;
+          design_id: number | null;
           id: string;
           site_name: string;
         };
         Insert: {
           created_at?: string;
           creator_id?: string | null;
+          design_id?: number | null;
           id?: string;
           site_name: string;
         };
         Update: {
           created_at?: string;
           creator_id?: string | null;
+          design_id?: number | null;
           id?: string;
           site_name?: string;
         };
@@ -88,6 +114,12 @@ export interface Database {
 export type Link = Database["public"]["Tables"]["links"]["Row"];
 export type InsertLink = Database["public"]["Tables"]["links"]["Insert"];
 export type UpdateLink = Database["public"]["Tables"]["links"]["Update"];
+
+export type SiteDesign = Database["public"]["Tables"]["site_design"]["Row"];
+export type InsertSiteDesign =
+  Database["public"]["Tables"]["site_design"]["Insert"];
+export type UpdateSiteDesign =
+  Database["public"]["Tables"]["site_design"]["Update"];
 
 export type Site = Database["public"]["Tables"]["sites"]["Row"];
 export type InsertSite = Database["public"]["Tables"]["sites"]["Insert"];

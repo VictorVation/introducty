@@ -12,6 +12,7 @@ import { Database } from "~/types/supabase";
 import SiteSettingsCard from "./SiteSettingsCard";
 import React from "react";
 import { EditorContextProvider } from "./EditorContext";
+import SiteDesignCard from "./SiteDesignCard";
 
 type Props = {
   params: { siteId: string };
@@ -34,7 +35,9 @@ export default async function Editor({ params }: Props) {
   });
   const { data: site, error: fetchSiteLinksError } = await supabase
     .from("sites")
-    .select(`site_name, links(id, title, url)`)
+    .select(
+      `site_name, links(id, title, url), site_design(background_type, gradient_id, solid)`
+    )
     .eq("id", siteId)
     .single();
 
@@ -51,11 +54,12 @@ export default async function Editor({ params }: Props) {
     <EditorContextProvider>
       <div
         className={
-          "mx-auto flex max-w-screen-xl flex-wrap justify-between gap-2 py-20 md:flex-nowrap"
+          "mx-auto flex max-w-screen-xl  flex-wrap justify-between gap-2 py-20 md:flex-nowrap"
         }
       >
-        <div className="mx-auto grid grid-cols-1 gap-4 xl:grid-flow-col xl:grid-cols-2">
+        <div className=" mx-auto grid grid-cols-1 gap-4 xl:grid-cols-2">
           <SiteSettingsCard siteId={siteId} siteName={siteName} />
+          <SiteDesignCard siteId={siteId} />
           <AddLinkCard siteId={siteId} links={links} />
         </div>
         <div className="mx-auto">

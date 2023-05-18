@@ -26,8 +26,10 @@ import {
 } from "~/components/ui/popover";
 import { validHex } from "~/lib/validateHex";
 import { EditorContext } from "./EditorContext";
+import { cva } from "class-variance-authority";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { cn } from "~/lib/utils";
 
-type Site = Pick<SiteType, "id" | "site_name">;
 type Props = {
   siteId: string;
   siteName: string;
@@ -35,7 +37,6 @@ type Props = {
 
 type Inputs = {
   siteName: string;
-  backgroundColor: string;
 };
 
 async function copyLinkToClipboard(e: React.SyntheticEvent, siteName: string) {
@@ -46,7 +47,7 @@ async function copyLinkToClipboard(e: React.SyntheticEvent, siteName: string) {
   toast.success("Link copied!", { id: "clipboard" });
 }
 
-export default function AddLinkCard({ siteName, siteId }: Props) {
+export default function SiteSettingsCard({ siteName, siteId }: Props) {
   const router = useRouter();
   const {
     register,
@@ -60,18 +61,9 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
     formState: { isSubmitting },
   } = useForm<Inputs>({ defaultValues: { siteName } });
 
-  const { backgroundColor: bgc, setBackgroundColor } =
-    useContext(EditorContext);
-
   function updateSite(data: Inputs) {
     toast("Editing settings coming soon!");
   }
-
-  const { onChange, ...backgroundColorFields } = register("backgroundColor", {
-    required: "This field is required",
-    validate: (v) =>
-      (v.startsWith("#") && validHex(v)) || "Invalid background color",
-  });
 
   return (
     <div>
@@ -96,7 +88,7 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
                 >
                   <label
                     htmlFor="siteName"
-                    className=" m-auto block cursor-text select-none text-muted-foreground"
+                    className="m-auto hidden cursor-text  select-none text-muted-foreground md:block"
                   >
                     introducty.com/
                   </label>
@@ -118,42 +110,6 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
               </div>
               {errors.siteName && (
                 <p className="text-sm text-rose-400">This field is required</p>
-              )}
-            </div>
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="backgroundColor">Background Color</Label>
-              <div className="flex w-full items-center space-x-2">
-                <Input
-                  type="text"
-                  id="backgroundColor"
-                  placeholder="#000000"
-                  onChange={(e) => {
-                    setBackgroundColor?.(e.currentTarget.value);
-                    onChange(e);
-                  }}
-                  {...backgroundColorFields}
-                />
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button className="p-4 py-6" variant="outline">
-                      <Palette />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto bg-background p-2">
-                    <HexColorPicker
-                      color={watch("backgroundColor")}
-                      onChange={(color) => {
-                        setBackgroundColor?.(color);
-                        setValue("backgroundColor", color);
-                      }}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              {errors.backgroundColor && (
-                <p className="text-sm text-rose-400">
-                  {errors.backgroundColor.message}
-                </p>
               )}
             </div>
 

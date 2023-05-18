@@ -6,20 +6,46 @@ import { Link as LinkType } from "~/types/supabase";
 import DeviceFrame from "./DeviceFrame";
 import { EditorContext } from "./EditorContext";
 import { useContext } from "react";
+import { cn } from "~/lib/utils";
+import { cva } from "class-variance-authority";
 
 type Props = {
   siteName: string;
   links?: Array<Pick<LinkType, "id" | "title" | "url">>;
 };
 
+const gradients = cva(["bg-gradient-to-br"], {
+  variants: {
+    gradientId: {
+      1: ["from-amber-300", "to-rose-400"], // OrangeRed
+      2: ["from-pink-400", "to-rose-400"], // RosePink
+      3: ["from-cyan-300", "to-blue-600"], // Sky
+      4: ["from-emerald-400", "to-cyan-500"], // CyanGreen
+      5: ["from-purple-600", "to-blue-500"], // BluePurple
+      6: ["from-green-600", "to-green-800"], // GreenGreen
+      7: ["from-fuchsia-300", "to-red-400"], // LightPink
+      8: ["from-purple-300", "to-blue-400"], // GreenGreen
+    },
+  },
+});
 export default function LinksPreviewComponent({ links, siteName }: Props) {
-  const { backgroundColor } = useContext(EditorContext);
+  const {
+    solid,
+    setSolid,
+    gradientId,
+    setGradientId,
+    backgroundType,
+    setBackgroundType,
+  } = useContext(EditorContext);
+
   const renderedLinks = links ?? [];
   return (
     <DeviceFrame>
       <div
-        className="h-full w-full rounded-[68px] bg-background"
-        style={{ backgroundColor }}
+        className={cn(
+          "h-full w-full rounded-[68px] bg-background",
+          gradients({ gradientId: 8 })
+        )}
       >
         <div className="grid gap-8 p-10 pt-32">
           <h4 className="text-md text-center font-bold">{siteName}</h4>

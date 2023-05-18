@@ -3,9 +3,6 @@ import Link from "next/link";
 import { headers, cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Database } from "~/types/supabase";
-import { SiteFooter } from "~/components/SiteFooter";
-import { Tags } from "lucide-react";
-import Logo from "~/components/Logo";
 
 type Props = {
   params: { siteName: string };
