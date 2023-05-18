@@ -1,6 +1,12 @@
 "use client";
 
-import { X, Loader2, ChevronsUpDownIcon, Palette } from "lucide-react";
+import {
+  X,
+  Loader2,
+  ChevronsUpDownIcon,
+  Palette,
+  ClipboardCopy,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
@@ -31,6 +37,14 @@ type Inputs = {
   siteName: string;
   backgroundColor: string;
 };
+
+async function copyLinkToClipboard(e: React.SyntheticEvent, siteName: string) {
+  e.preventDefault();
+  await navigator.clipboard.writeText(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/${siteName}`
+  );
+  toast.success("Link copied!", { id: "clipboard" });
+}
 
 export default function AddLinkCard({ siteName, siteId }: Props) {
   const router = useRouter();
@@ -73,24 +87,34 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
           >
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="siteName">Site Name</Label>
-              <div
-                className={
-                  "text-md h-13 flex w-full flex-row justify-start rounded-md border border-input bg-transparent px-3 align-middle ring-offset-background"
-                }
-              >
-                <label
-                  htmlFor="siteName"
-                  className=" m-auto block cursor-text select-none text-muted-foreground"
+
+              <div className="flex w-full items-center space-x-2">
+                <div
+                  className={
+                    "text-md h-13 flex w-full flex-row justify-start rounded-md border border-input bg-transparent px-3 align-middle ring-offset-background"
+                  }
                 >
-                  introducty.com/
-                </label>
-                <Input
-                  type="text"
-                  id="siteName"
-                  placeholder="Title"
-                  className="block border-none pl-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                  {...register("siteName", { required: true })}
-                />
+                  <label
+                    htmlFor="siteName"
+                    className=" m-auto block cursor-text select-none text-muted-foreground"
+                  >
+                    introducty.com/
+                  </label>
+                  <Input
+                    type="text"
+                    id="siteName"
+                    placeholder="Title"
+                    className="block border-none pl-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    {...register("siteName", { required: true })}
+                  />
+                </div>
+                <Button
+                  className="p-4 py-6"
+                  variant="outline"
+                  onClick={(e) => copyLinkToClipboard(e, siteName)}
+                >
+                  <ClipboardCopy />
+                </Button>
               </div>
               {errors.siteName && (
                 <p className="text-sm text-rose-400">This field is required</p>
@@ -110,6 +134,11 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
                   {...backgroundColorFields}
                 />
                 <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="p-4 py-6" variant="outline">
+                      <Palette />
+                    </Button>
+                  </PopoverTrigger>
                   <PopoverContent className="w-auto bg-background p-2">
                     <HexColorPicker
                       color={watch("backgroundColor")}
@@ -119,11 +148,6 @@ export default function AddLinkCard({ siteName, siteId }: Props) {
                       }}
                     />
                   </PopoverContent>
-                  <PopoverTrigger asChild>
-                    <Button className="p-4 py-6" variant="outline">
-                      <Palette />
-                    </Button>
-                  </PopoverTrigger>
                 </Popover>
               </div>
               {errors.backgroundColor && (

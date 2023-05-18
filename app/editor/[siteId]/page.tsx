@@ -50,7 +50,9 @@ export default async function Editor({ params }: Props) {
   return (
     <EditorContextProvider>
       <div
-        className={" mx-auto flex max-w-screen-xl justify-between gap-2 py-20 "}
+        className={
+          "mx-auto flex max-w-screen-xl flex-wrap justify-between gap-2 py-20 md:flex-nowrap"
+        }
       >
         <div className="mx-auto grid grid-cols-1 gap-4 xl:grid-flow-col xl:grid-cols-2">
           <SiteSettingsCard siteId={siteId} siteName={siteName} />
