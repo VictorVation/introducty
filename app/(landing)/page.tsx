@@ -69,7 +69,7 @@ export default async function IndexPage() {
             <div className="space-y-2">
               <h3 className="font-bold">Design by Default</h3>
               <p className="text-sm text-muted-foreground">
-                Your page is modern & beautiful straight out of the box.
+                Your page is modern and beautiful, right out of the box.
               </p>
             </div>
           </FeatureCell>

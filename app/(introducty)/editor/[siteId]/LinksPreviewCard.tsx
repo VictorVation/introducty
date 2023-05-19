@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Link as LinkType } from "~/types/supabase";
-import DeviceFrame from "./components/DeviceFrame";
+import DeviceFrame from "./DeviceFrame";
 import { EditorContext } from "./EditorContext";
 import { useContext } from "react";
 import { cn } from "~/lib/utils";

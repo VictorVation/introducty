@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import "~/components/devices.css";
+
 export default function DeviceFrame({ children }: PropsWithChildren) {
   return (
     <div className="device device-iphone-14-pro">

@@ -5,10 +5,17 @@ import { notFound } from "next/navigation";
 import { Database } from "~/types/supabase";
 import { cn } from "~/lib/utils";
 import { GradientIdsType, gradientVariant } from "~/config/gradients";
+import { Metadata } from "next";
 
 type Props = {
   params: { siteName: string };
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  return {
+    title: params.siteName,
+  };
+}
 
 export default async function CreatorPage({ params: { siteName } }: Props) {
   const supabase = createServerComponentSupabaseClient<Database>({
@@ -39,7 +46,7 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
   return (
     <div
       className={cn(
-        "flex min-h-screen flex-col items-center p-24",
+        "flex min-h-screen flex-col items-center p-24 gap-8",
         backgroundType === "gradient" &&
           gradientVariant({ gradientId: gradientId as GradientIdsType })
       )}
@@ -49,10 +56,10 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
       }}
     >
       <h1 className={"text-2xl font-bold"}>{siteName}</h1>
-      <div className="m-8 flex h-full w-96 flex-col justify-center gap-4 overflow-hidden">
+      <div className="flex h-full w-96 flex-col justify-center gap-4">
         {links.map((link) => (
           <Link
-            className={"w-full rounded-lg border bg-white p-8 text-center"}
+            className={"w-full rounded-lg border bg-white p-4 text-center"}
             key={link.id}
             href={link.url}
           >
