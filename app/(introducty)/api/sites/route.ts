@@ -86,13 +86,17 @@ export async function POST(req: Request) {
         style: "capital",
         separator: "",
       });
-    const { site, error: insertError } = await supabase.from("sites").insert({
-      site_name: siteName,
-      creator_id: authUser.id,
-      design: null,
-    });
+    const { data: site, error: insertError } = await supabase
+      .from("sites")
+      .insert({
+        site_name: siteName,
+        creator_id: authUser.id,
+        design: null,
+      });
 
-    console.log(insertError);
+    if (insertError) {
+      return new Response(insertError.message, { status: 500 });
+    }
 
     return new Response(JSON.stringify(site));
   } catch (error) {
