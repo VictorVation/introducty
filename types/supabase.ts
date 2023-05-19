@@ -63,6 +63,7 @@ export interface Database {
           created_at: string;
           creator_id: string | null;
           design: number;
+          hideBranding: boolean;
           id: string;
           site_name: string;
         };
@@ -70,6 +71,7 @@ export interface Database {
           created_at?: string;
           creator_id?: string | null;
           design: number;
+          hideBranding?: boolean;
           id?: string;
           site_name: string;
         };
@@ -77,6 +79,7 @@ export interface Database {
           created_at?: string;
           creator_id?: string | null;
           design?: number;
+          hideBranding?: boolean;
           id?: string;
           site_name?: string;
         };

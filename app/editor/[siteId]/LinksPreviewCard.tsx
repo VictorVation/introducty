@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { gradients } from "./SiteDesignCard";
-import type { GradientIds } from "./SiteDesignCard";
 import { Link as LinkType } from "~/types/supabase";
 import DeviceFrame from "./components/DeviceFrame";
 import { EditorContext } from "./EditorContext";
 import { useContext } from "react";
 import { cn } from "~/lib/utils";
+import { GradientIdsType, gradientVariant } from "~/config/gradients";
 
 type Props = {
   siteName: string;
@@ -24,7 +23,7 @@ export default function LinksPreviewComponent({ links, siteName }: Props) {
         className={cn(
           "h-full w-full rounded-[68px] bg-background",
           backgroundType === "gradient" &&
-            gradients({ gradientId: gradientId as GradientIds })
+            gradientVariant({ gradientId: gradientId as GradientIdsType })
         )}
         style={{
           backgroundColor: backgroundType === "solid" ? solid : undefined,

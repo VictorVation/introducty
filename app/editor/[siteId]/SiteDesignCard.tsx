@@ -3,14 +3,13 @@
 import { Loader2, Palette, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { Controller, useController, useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Badge } from "~/components/ui/badge";
 
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
-import { SiteDesign, Site as SiteType } from "types/supabase";
 import {
   Card,
   CardHeader,
@@ -28,11 +27,15 @@ import {
 } from "~/components/ui/popover";
 import { validHex } from "~/lib/validateHex";
 import { EditorContext } from "./EditorContext";
-import { cva } from "class-variance-authority";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { cn } from "~/lib/utils";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "~/components/ui/tabs";
 import { Alert, AlertDescription } from "~/components/ui/alert";
+import {
+  GradientIds,
+  GradientIdsType,
+  gradientVariant,
+} from "~/config/gradients";
 
 type Props = {
   //   siteDesign: Pick<
@@ -46,24 +49,6 @@ type Inputs = {
   backgroundType: string;
   gradientId: string;
 };
-
-const _gradients = {
-  "1": ["from-amber-300", "to-rose-400"], // OrangeRed
-  "2": ["from-pink-400", "to-rose-400"], // RosePink
-  "3": ["from-cyan-300", "to-blue-600"], // Sky
-  "4": ["from-emerald-400", "to-cyan-500"], // CyanGreen
-  "5": ["from-purple-600", "to-blue-500"], // BluePurple
-  "6": ["from-green-400", "to-green-900"], // GreenGreen
-  "7": ["from-fuchsia-300", "to-red-400"], // LightPink
-  "8": ["from-purple-300", "to-blue-400"], // GreenGreen
-  "9": ["from-purple-500", "to-rose-500"], // GreenGreen
-};
-export type GradientIds = keyof typeof _gradients;
-export const gradients = cva(["bg-gradient-to-br"], {
-  variants: {
-    gradientId: _gradients,
-  },
-});
 
 export default function SiteDesignCard({ siteDesignId }: Props) {
   const router = useRouter();
@@ -123,7 +108,6 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
       router.refresh();
       toast.success(`Updated site design!`);
     }
-    toast("Editing design coming soon!");
   }
 
   return (
@@ -171,13 +155,15 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
                       }}
                       {...gradientIdFieldProps}
                     >
-                      {Object.keys(_gradients).map((gradientId: string) => (
+                      {GradientIds.map((gradientId: string) => (
                         <Label
                           key={gradientId}
                           htmlFor={gradientId}
                           className={cn(
                             "flex aspect-square flex-col rounded-md border-2 border-muted bg-popover hover:border-black hover:text-accent-foreground [&:has([data-state=checked])]:border-black",
-                            gradients({ gradientId: gradientId as GradientIds })
+                            gradientVariant({
+                              gradientId: gradientId as GradientIdsType,
+                            })
                           )}
                         >
                           <RadioGroupItem

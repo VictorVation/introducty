@@ -54,7 +54,6 @@ export default async function Editor({ params }: Props) {
 
   const siteDesign = Array.isArray(site.design) ? site.design[0] : site.design;
 
-  console.log(site);
   return (
     <EditorContextProvider
       solid={siteDesign?.solid}
