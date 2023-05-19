@@ -73,7 +73,7 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
         <CardHeader className="pb-2">
           <CardTitle>Site Settings</CardTitle>
           <CardDescription>
-            Configure your site's name and settings.
+            Configure your site&apos;s name and settings.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid w-full gap-4">
