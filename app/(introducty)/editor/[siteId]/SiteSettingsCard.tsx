@@ -27,6 +27,7 @@ type Props = {
 
 type Inputs = {
   siteName: string;
+  hideBranding: boolean;
 };
 
 async function copyLinkToClipboard(e: React.SyntheticEvent, siteName: string) {
@@ -51,8 +52,19 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
     formState: { isSubmitting },
   } = useForm<Inputs>({ defaultValues: { siteName } });
 
-  function updateSite(data: Inputs) {
-    toast("Editing settings coming soon!");
+  async function updateSite(data: Inputs) {
+    const res = await fetch(`/api/sites/${siteId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ siteName: data.siteName, hideBranding: false }),
+    });
+    if (!res.ok) {
+      if (res.status === 422) return toast.error(await res.text());
+      console.error(res);
+      toast.error("Error, site settings weren't updated. Please try again");
+    } else {
+      router.refresh();
+      toast.success(`Updated site settings!`);
+    }
   }
 
   return (
@@ -106,9 +118,9 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
             </div>
 
             <div className="flex items-center space-x-2">
-              <Switch id="hide-branding" disabled />
+              <Switch id="hide-branding" {...register("hideBranding")} />
               <Label
-                htmlFor="hide-branding"
+                htmlFor="hideBranding"
                 className="text-secondary-foreground"
               >
                 <Badge className="mr-2" variant="outline">

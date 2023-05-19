@@ -55,58 +55,47 @@ export async function DELETE(
   }
 }
 
-// const patchRequestSchema = z.object({
-//   params: z.object({
-//     gradientId: z.number(),
-//     backgroundType: z.string(),
-//     solid: z.string(),
-//   }),
-// });
-// export async function PATCH(
-//   req: Request,
-//   context: z.infer<typeof routeContextSchema>
-// ) {
-//   try {
-//     // Validate route params.
-//     const { params } = routeContextSchema.parse(context);
+const patchRequestSchema = z.object({
+  siteName: z.string(),
+  hideBranding: z.boolean(),
+});
+export async function PATCH(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+  try {
+    // Validate route params.
+    const { params } = routeContextSchema.parse(context);
 
-//     // Check if the user has access to this post.
-//     if (!(await verifyCurrentUserHasAccessToSite(params.siteId))) {
-//       return new Response(null, { status: 403 });
-//     }
+    // Get the request body and validate it.
+    const json = await req.json();
+    const { siteName } = patchRequestSchema.parse(json);
 
-//     // Get the request body and validate it.
-//     const json = await req.json();
-//     const { gradientId, backgroundType, solid } =
-//       patchRequestSchema.parse(json).params;
+    // Update the post.
+    const supabase = createRouteHandlerSupabaseClient<Database>({
+      headers,
+      cookies,
+    });
+    const { error: updateError } = await supabase
+      .from("sites")
+      .update({
+        site_name: siteName,
+      })
+      .eq("id", params.siteId);
 
-//     // Update the post.
-//     const supabase = createRouteHandlerSupabaseClient<Database>({
-//       headers,
-//       cookies,
-//     });
-//     const { error: updateError } = await supabase
-//       .from("site_design")
-//       .update({
-//         gradient_id: gradientId,
-//         background_type: backgroundType,
-//         solid,
-//       })
-//       .eq("id", params.siteId);
+    if (updateError) {
+      console.error(updateError);
+      return new Response(null, { status: 500 });
+    }
+    return new Response(null, { status: 200 });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 });
+    }
 
-//     if (updateError) {
-//       console.error(updateError);
-//       return new Response(null, { status: 500 });
-//     }
-//     return new Response(null, { status: 200 });
-//   } catch (error) {
-//     if (error instanceof z.ZodError) {
-//       return new Response(JSON.stringify(error.issues), { status: 422 });
-//     }
-
-//     return new Response(null, { status: 500 });
-//   }
-// }
+    return new Response(null, { status: 500 });
+  }
+}
 
 export async function verifyCurrentUserHasAccessToSite(siteId: string) {
   const authUser = await getUser();
