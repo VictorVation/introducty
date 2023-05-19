@@ -31,11 +31,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { cn } from "~/lib/utils";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "~/components/ui/tabs";
 import { Alert, AlertDescription } from "~/components/ui/alert";
-import {
-  GradientIds,
-  GradientIdsType,
-  gradientVariant,
-} from "~/config/gradients";
+import { GradientIds, GradientIdsType, gradientVariant } from "~/lib/gradients";
 
 type Props = {
   //   siteDesign: Pick<
@@ -60,7 +56,7 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
     backgroundType,
     setBackgroundType,
   } = useContext(EditorContext);
-  console.log(backgroundType);
+
   const {
     register,
     handleSubmit,
@@ -109,6 +105,12 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
       toast.success(`Updated site design!`);
     }
   }
+
+  console.log(
+    gradientVariant({
+      gradientId: gradientId as GradientIdsType,
+    })
+  );
 
   return (
     <div className="w-sm row-span-2 transition-all duration-500">
@@ -160,7 +162,7 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
                           key={gradientId}
                           htmlFor={gradientId}
                           className={cn(
-                            "flex aspect-square flex-col rounded-md border-2 border-muted bg-popover hover:border-black hover:text-accent-foreground [&:has([data-state=checked])]:border-black",
+                            "flex aspect-square flex-col cursor-pointer rounded-md border-2 border-muted bg-popover hover:border-black hover:text-accent-foreground [&:has([data-state=checked])]:border-black",
                             gradientVariant({
                               gradientId: gradientId as GradientIdsType,
                             })

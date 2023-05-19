@@ -62,7 +62,7 @@ export interface Database {
         Row: {
           created_at: string;
           creator_id: string | null;
-          design: number;
+          design: number | null;
           hideBranding: boolean;
           id: string;
           site_name: string;
@@ -70,7 +70,7 @@ export interface Database {
         Insert: {
           created_at?: string;
           creator_id?: string | null;
-          design: number;
+          design?: number | null;
           hideBranding?: boolean;
           id?: string;
           site_name: string;
@@ -78,7 +78,7 @@ export interface Database {
         Update: {
           created_at?: string;
           creator_id?: string | null;
-          design?: number;
+          design?: number | null;
           hideBranding?: boolean;
           id?: string;
           site_name?: string;

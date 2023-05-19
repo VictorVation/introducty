@@ -4,7 +4,7 @@ import { headers, cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Database } from "~/types/supabase";
 import { cn } from "~/lib/utils";
-import { GradientIdsType, gradientVariant } from "~/config/gradients";
+import { GradientIdsType, gradientVariant } from "~/lib/gradients";
 import { Metadata } from "next";
 
 type Props = {
@@ -32,6 +32,7 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
   if (fetchSiteError) {
     return notFound();
   }
+
   const links = Array.isArray(site.links)
     ? site.links
     : site.links != null
@@ -59,7 +60,9 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
       <div className="flex h-full w-96 flex-col justify-center gap-4">
         {links.map((link) => (
           <Link
-            className={"w-full rounded-lg border bg-white p-4 text-center"}
+            className={
+              "w-full rounded-lg border bg-slate-50 p-4 border-slate-200 text-center hover:-translate-y-1 hover:scale-105 hover:bg-slate-200 hover:border-slate-300 duration-150"
+            }
             key={link.id}
             href={link.url}
           >

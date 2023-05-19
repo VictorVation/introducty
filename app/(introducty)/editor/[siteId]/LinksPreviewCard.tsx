@@ -6,7 +6,7 @@ import DeviceFrame from "./DeviceFrame";
 import { EditorContext } from "./EditorContext";
 import { useContext } from "react";
 import { cn } from "~/lib/utils";
-import { GradientIdsType, gradientVariant } from "~/config/gradients";
+import { GradientIdsType, gradientVariant } from "~/lib/gradients";
 
 type Props = {
   siteName: string;
@@ -21,7 +21,7 @@ export default function LinksPreviewComponent({ links, siteName }: Props) {
     <DeviceFrame>
       <div
         className={cn(
-          "h-full w-full rounded-[68px] bg-background",
+          "h-full w-full rounded-[68px]",
           backgroundType === "gradient" &&
             gradientVariant({ gradientId: gradientId as GradientIdsType })
         )}
@@ -30,12 +30,14 @@ export default function LinksPreviewComponent({ links, siteName }: Props) {
         }}
       >
         <div className="grid gap-8 p-10 pt-32">
-          <h4 className="text-md text-center font-bold">{siteName}</h4>
+          <h4 className="text-md text-black text-center font-bold">
+            {siteName}
+          </h4>
           <div className="grid gap-2">
             {renderedLinks.map((link) => (
               <Link
                 className={
-                  "w-full rounded-lg border bg-background p-4 text-center"
+                  "w-full rounded-lg border bg-slate-50 border-slate-200 text-black p-4 text-center"
                 }
                 key={link.id}
                 href={link.url}

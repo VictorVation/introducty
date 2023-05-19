@@ -1,4 +1,5 @@
 import "~/app/globals.css";
+
 import SupabaseProvider from "~/app/supabase-provider";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "~/components/ThemeProvider";
