@@ -76,7 +76,7 @@ export default function AddLinkCard({ links, siteId }: Props) {
     const res = await fetch(`/api/links/${id}`, {
       method: "DELETE",
     });
-    console.log(res);
+
     if (!res.ok) {
       if (res.status === 422) return toast.error(await res.text());
       toast.error("Error, your link was not deleted. Please try again");

@@ -43,11 +43,6 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
   const {
     register,
     handleSubmit,
-    setValue,
-    control,
-    getValues,
-    reset,
-    watch,
     formState: { errors },
     formState: { isSubmitting },
   } = useForm<Inputs>({ defaultValues: { siteName } });
@@ -97,6 +92,7 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
                     introducty.com/
                   </label>
                   <Input
+                    defaultValue={siteName}
                     type="text"
                     id="siteName"
                     placeholder="Title"

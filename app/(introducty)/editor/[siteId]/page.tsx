@@ -71,7 +71,26 @@ export default async function Editor({ params }: Props) {
           <AddLinkCard siteId={siteId} links={links} />
         </div>
         <div className="mx-auto">
-          <LinksPreviewCard siteName={siteName} links={links} />
+          <LinksPreviewCard siteName={siteName} links={links}>
+            <div className="grid gap-8 p-10 pt-32">
+              <h4 className="text-md text-black text-center font-bold">
+                {siteName}
+              </h4>
+              <div className="grid gap-2">
+                {links.map((link) => (
+                  <Link
+                    className={
+                      "w-full rounded-lg border bg-slate-50 border-slate-200 text-black p-4 text-center"
+                    }
+                    key={link.id}
+                    href={link.url}
+                  >
+                    {link.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </LinksPreviewCard>
         </div>
       </div>
       <Link

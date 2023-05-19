@@ -86,7 +86,6 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
   } = useController({ name: "gradientId", control });
 
   const handleSolidChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
     setSolidContext?.(e.currentTarget.value);
     onSolidInputChange(e);
   };
@@ -105,12 +104,6 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
       toast.success(`Updated site design!`);
     }
   }
-
-  console.log(
-    gradientVariant({
-      gradientId: gradientId as GradientIdsType,
-    })
-  );
 
   return (
     <div className="w-sm row-span-2 transition-all duration-500">
