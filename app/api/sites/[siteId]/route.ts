@@ -55,6 +55,13 @@ export async function DELETE(
   }
 }
 
+// const patchRequestSchema = z.object({
+//   params: z.object({
+//     gradientId: z.number(),
+//     backgroundType: z.string(),
+//     solid: z.string(),
+//   }),
+// });
 // export async function PATCH(
 //   req: Request,
 //   context: z.infer<typeof routeContextSchema>
@@ -64,26 +71,33 @@ export async function DELETE(
 //     const { params } = routeContextSchema.parse(context);
 
 //     // Check if the user has access to this post.
-//     if (!(await verifyCurrentUserHasAccessToSite(params.postId))) {
+//     if (!(await verifyCurrentUserHasAccessToSite(params.siteId))) {
 //       return new Response(null, { status: 403 });
 //     }
 
 //     // Get the request body and validate it.
 //     const json = await req.json();
-//     const body = postPatchSchema.parse(json);
+//     const { gradientId, backgroundType, solid } =
+//       patchRequestSchema.parse(json).params;
 
 //     // Update the post.
-//     // TODO: Implement sanitization for content.
-//     await db.post.update({
-//       where: {
-//         id: params.postId,
-//       },
-//       data: {
-//         title: body.title,
-//         content: body.content,
-//       },
+//     const supabase = createRouteHandlerSupabaseClient<Database>({
+//       headers,
+//       cookies,
 //     });
+//     const { error: updateError } = await supabase
+//       .from("site_design")
+//       .update({
+//         gradient_id: gradientId,
+//         background_type: backgroundType,
+//         solid,
+//       })
+//       .eq("id", params.siteId);
 
+//     if (updateError) {
+//       console.error(updateError);
+//       return new Response(null, { status: 500 });
+//     }
 //     return new Response(null, { status: 200 });
 //   } catch (error) {
 //     if (error instanceof z.ZodError) {

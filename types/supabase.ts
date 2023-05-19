@@ -35,23 +35,26 @@ export interface Database {
       site_design: {
         Row: {
           background_type: string;
-          gradient_id: number | null;
+          gradient_id: string | null;
           id: number;
           image_url: string | null;
+          site_id: string;
           solid: string | null;
         };
         Insert: {
           background_type?: string;
-          gradient_id?: number | null;
+          gradient_id?: string | null;
           id?: number;
           image_url?: string | null;
+          site_id: string;
           solid?: string | null;
         };
         Update: {
           background_type?: string;
-          gradient_id?: number | null;
+          gradient_id?: string | null;
           id?: number;
           image_url?: string | null;
+          site_id?: string;
           solid?: string | null;
         };
       };
@@ -59,21 +62,21 @@ export interface Database {
         Row: {
           created_at: string;
           creator_id: string | null;
-          design_id: number | null;
+          design: number;
           id: string;
           site_name: string;
         };
         Insert: {
           created_at?: string;
           creator_id?: string | null;
-          design_id?: number | null;
+          design: number;
           id?: string;
           site_name: string;
         };
         Update: {
           created_at?: string;
           creator_id?: string | null;
-          design_id?: number | null;
+          design?: number;
           id?: string;
           site_name?: string;
         };

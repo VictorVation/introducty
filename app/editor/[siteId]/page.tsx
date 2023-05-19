@@ -36,12 +36,13 @@ export default async function Editor({ params }: Props) {
   const { data: site, error: fetchSiteLinksError } = await supabase
     .from("sites")
     .select(
-      `site_name, links(id, title, url), site_design(background_type, gradient_id, solid)`
+      `site_name, links(id, title, url), design:site_design!sites_design_fkey(background_type, gradient_id, solid, id)`
     )
     .eq("id", siteId)
     .single();
 
   if (fetchSiteLinksError) {
+    console.error(fetchSiteLinksError);
     return notFound();
   }
   const { site_name: siteName } = site;
@@ -50,8 +51,16 @@ export default async function Editor({ params }: Props) {
     : site.links != null
     ? [site.links]
     : [];
+
+  const siteDesign = Array.isArray(site.design) ? site.design[0] : site.design;
+
+  console.log(site);
   return (
-    <EditorContextProvider>
+    <EditorContextProvider
+      solid={siteDesign?.solid}
+      backgroundType={siteDesign?.background_type}
+      gradientId={siteDesign?.gradient_id}
+    >
       <div
         className={
           "mx-auto flex max-w-screen-xl flex-wrap justify-between gap-2 py-20 md:flex-nowrap"
@@ -59,7 +68,7 @@ export default async function Editor({ params }: Props) {
       >
         <div className=" mx-auto grid grid-cols-1 gap-4 xl:grid-cols-2">
           <SiteSettingsCard siteId={siteId} siteName={siteName} />
-          <SiteDesignCard siteId={siteId} />
+          {siteDesign && <SiteDesignCard siteDesignId={siteDesign.id} />}
           <AddLinkCard siteId={siteId} links={links} />
         </div>
         <div className="mx-auto">
