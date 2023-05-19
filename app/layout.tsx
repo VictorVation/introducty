@@ -23,11 +23,7 @@ const manrope = Manrope({
   variable: "--font-heading",
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
@@ -37,12 +33,7 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="container">
-            <SupabaseProvider session={null}>{children}</SupabaseProvider>
-            <Toaster />
-          </main>
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

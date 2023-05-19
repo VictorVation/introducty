@@ -1,7 +1,7 @@
 import { DashboardHeader } from "~/components/DashboardHeader";
-import { LinkItem } from "~/app/dashboard/(sites)/SiteLinkItem";
+import { LinkItem } from "~/app/(introducty)/dashboard/(sites)/SiteLinkItem";
 import { DashboardShell } from "~/components/DashboardShell";
-import { SiteCreateButton } from "~/app/dashboard/(sites)/SiteCreateButton";
+import { SiteCreateButton } from "~/app/(introducty)/dashboard/(sites)/SiteCreateButton";
 
 export default function DashboardLoading() {
   return (

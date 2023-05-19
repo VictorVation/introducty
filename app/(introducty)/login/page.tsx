@@ -5,7 +5,6 @@ import { ChevronLeft } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
 import Logo from "~/components/Logo";
-import { Auth } from "@supabase/auth-ui-react";
 import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {

@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import { SiteCreateButton } from "~/app/dashboard/(sites)/SiteCreateButton";
+import { SiteCreateButton } from "~/app/(introducty)/dashboard/(sites)/SiteCreateButton";
 import { EmptyPlaceholder } from "~/components/EmptyPlaceholder";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
-import { LinkItem } from "~/app/dashboard/(sites)/SiteLinkItem";
+import { LinkItem } from "~/app/(introducty)/dashboard/(sites)/SiteLinkItem";
 
 import getUser from "~/lib/getUser";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";

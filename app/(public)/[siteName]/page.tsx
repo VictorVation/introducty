@@ -60,7 +60,7 @@ export default async function CreatorPage({ params: { siteName } }: Props) {
           </Link>
         ))}
       </div>
-      {site?.hideBranding && (
+      {!site?.hideBranding && (
         <footer className="mt-auto">
           <div className="container bottom-0 mt-8 flex flex-col items-center gap-4 py-10 pb-16 text-sm md:h-24 md:flex-row md:py-0">
             <div className="flex flex-col items-center gap-4 px-8 text-center md:flex-row md:gap-2 md:px-0">

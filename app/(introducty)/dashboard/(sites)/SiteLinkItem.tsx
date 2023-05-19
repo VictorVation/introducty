@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 import { cn, formatDate } from "~/lib/utils";
-import { SiteLinkMoreActions } from "~/app/dashboard/(sites)/SiteLinkMoreActions";
+import { SiteLinkMoreActions } from "~/app/(introducty)/dashboard/(sites)/SiteLinkMoreActions";
 import { Site } from "~/types/supabase";
 import SiteActionCopyLink from "./SiteActionCopyLink";
 import SiteActionQrCode from "./SiteActionQrCode";

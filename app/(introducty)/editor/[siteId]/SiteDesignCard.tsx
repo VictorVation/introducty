@@ -60,7 +60,7 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
     backgroundType,
     setBackgroundType,
   } = useContext(EditorContext);
-
+  console.log(backgroundType);
   const {
     register,
     handleSubmit,
@@ -69,7 +69,7 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
     watch,
     formState: { isSubmitting, errors },
   } = useForm<Inputs>({
-    defaultValues: { solid, backgroundType, gradientId: `${gradientId}` },
+    defaultValues: { solid, backgroundType, gradientId },
   });
 
   const { onChange: onSolidInputChange, ...backgroundColorFields } = register(
@@ -234,7 +234,7 @@ export default function SiteDesignCard({ siteDesignId }: Props) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit">
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
