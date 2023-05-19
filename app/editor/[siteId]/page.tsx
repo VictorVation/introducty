@@ -7,7 +7,7 @@ import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import getUser from "~/lib/getUser";
 import AddLinkCard from "./AddLinkCard";
-import LinksPreview from "./LinksPreview";
+import LinksPreviewCard from "./LinksPreviewCard";
 import { Database } from "~/types/supabase";
 import SiteSettingsCard from "./SiteSettingsCard";
 import React from "react";
@@ -72,7 +72,7 @@ export default async function Editor({ params }: Props) {
           <AddLinkCard siteId={siteId} links={links} />
         </div>
         <div className="mx-auto">
-          <LinksPreview siteName={siteName} links={links} />
+          <LinksPreviewCard siteName={siteName} links={links} />
         </div>
       </div>
       <Link
