@@ -114,7 +114,11 @@ export default function SiteSettingsCard({ siteName, siteId }: Props) {
             </div>
 
             <div className="flex items-center space-x-2">
-              <Switch id="hide-branding" {...register("hideBranding")} />
+              <Switch
+                id="hideBranding"
+                disabled
+                {...register("hideBranding")}
+              />
               <Label
                 htmlFor="hideBranding"
                 className="text-secondary-foreground"
