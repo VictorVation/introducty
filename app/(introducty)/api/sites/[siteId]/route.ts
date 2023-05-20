@@ -1,10 +1,10 @@
 import * as z from "zod";
 
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { headers, cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { fromZodError } from "zod-validation-error";
 import getUser from "~/lib/getUser";
 import { Database } from "~/types/supabase";
-import { fromZodError } from "zod-validation-error";
 
 const routeContextSchema = z.object({
   params: z.object({

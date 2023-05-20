@@ -1,18 +1,18 @@
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { cookies, headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
-import getUser from "~/lib/getUser";
-import AddLinkCard from "./AddLinkCard";
-import LinksPreviewCard from "./LinksPreviewCard";
-import { Database } from "~/types/supabase";
-import SiteSettingsCard from "./SiteSettingsCard";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
+import { buttonVariants } from "~/components/ui/button";
+import getUser from "~/lib/getUser";
+import { cn } from "~/lib/utils";
+import { Database } from "~/types/supabase";
+import AddLinkCard from "./AddLinkCard";
 import { EditorContextProvider } from "./EditorContext";
+import LinksPreviewCard from "./LinksPreviewCard";
 import SiteDesignCard from "./SiteDesignCard";
+import SiteSettingsCard from "./SiteSettingsCard";
 
 type Props = {
   params: { siteId: string };

@@ -1,26 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import { PropsWithChildren, useContext } from "react";
+import { GradientIdsType, gradientVariant } from "~/lib/gradients";
+import { cn } from "~/lib/utils";
 import { Link as LinkType } from "~/types/supabase";
 import DeviceFrame from "./DeviceFrame";
 import { EditorContext } from "./EditorContext";
-import { PropsWithChildren, useContext } from "react";
-import { cn } from "~/lib/utils";
-import { GradientIdsType, gradientVariant } from "~/lib/gradients";
 
 type Props = PropsWithChildren<{
   siteName: string;
   links?: Array<Pick<LinkType, "id" | "title" | "url">>;
 }>;
 
-export default function LinksPreviewComponent({
-  links,
-  siteName,
-  children,
-}: Props) {
+export default function LinksPreviewComponent({ links, children }: Props) {
   const { solid, gradientId, backgroundType } = useContext(EditorContext);
-
-  const renderedLinks = links ?? [];
   return (
     <DeviceFrame>
       <div

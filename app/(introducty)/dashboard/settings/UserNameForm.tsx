@@ -1,11 +1,14 @@
 "use client";
 
-import * as React from "react";
 import { useRouter } from "next/navigation";
+import * as React from "react";
 import { useForm } from "react-hook-form";
 
 import { cn } from "~/lib/utils";
 
+import { Loader2 } from "lucide-react";
+import { startTransition } from "react";
+import toast from "react-hot-toast";
 import { buttonVariants } from "~/components/ui/button";
 import {
   Card,
@@ -17,9 +20,6 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
-import { startTransition } from "react";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: { id: string; name: string; email: string };

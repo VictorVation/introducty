@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
-import { DashboardHeader } from "~/components/DashboardHeader";
-import { DashboardShell } from "~/components/DashboardShell";
-import { UserNameForm } from "./UserNameForm";
-import getUser from "~/lib/getUser";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
+import { DashboardHeader } from "~/components/DashboardHeader";
+import { DashboardShell } from "~/components/DashboardShell";
+import getUser from "~/lib/getUser";
+import { UserNameForm } from "./UserNameForm";
 
 export const metadata = {
   title: "Settings",

@@ -3,6 +3,9 @@
 import { DialogClose, DialogDescription } from "@radix-ui/react-dialog";
 import { DownloadCloudIcon, QrCodeIcon } from "lucide-react";
 
+import { SyntheticEvent, useRef, useTransition } from "react";
+import toast from "react-hot-toast";
+import QRCode from "react-qr-code";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -12,9 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import QRCode from "react-qr-code";
-import { SyntheticEvent, useRef, useTransition } from "react";
-import toast from "react-hot-toast";
 
 type Props = {
   siteName: string;

@@ -1,10 +1,12 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import * as React from "react";
 import type { Site } from "types/supabase";
 
+import { Loader2, MoreVertical, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,8 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import toast from "react-hot-toast";
-import { MoreVertical, Loader2, Trash2 } from "lucide-react";
 
 async function deletePost(siteId: string) {
   const response = await fetch(`/api/sites/${siteId}`, {

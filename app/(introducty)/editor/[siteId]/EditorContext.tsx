@@ -1,6 +1,6 @@
 "use client";
 
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 
 type EditorContextType = {
   solid: string;

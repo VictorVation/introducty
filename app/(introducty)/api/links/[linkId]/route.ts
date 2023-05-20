@@ -1,5 +1,5 @@
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { headers, cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import getUser from "~/lib/getUser";

@@ -1,30 +1,29 @@
 "use client";
 
-import { X, Loader2, ChevronsUpDownIcon } from "lucide-react";
+import { ChevronsUpDownIcon, Loader2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { Button } from "~/components/ui/button";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
+import { useState } from "react";
 import { Link as LinkType } from "types/supabase";
+import { Button } from "~/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
-import { useState } from "react";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Separator } from "~/components/ui/separator";
 
 type EditorLinkType = Pick<LinkType, "id" | "title" | "url">;
 type Props = {

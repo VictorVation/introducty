@@ -2,7 +2,8 @@
 
 import * as React from "react";
 
-import { cn } from "~/lib/utils";
+import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 import { buttonVariants } from "~/components/ui/button";
 import {
   Card,
@@ -12,8 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Loader2 } from "lucide-react";
-import toast from "react-hot-toast";
+import { cn } from "~/lib/utils";
 
 export type SubscriptionPlan = {
   name: string;

@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 
 // import { stripe } from "~/lib/stripe";
 // import { getUserSubscriptionPlan } from "~/lib/subscription";
-import { BillingForm } from "./BillingForm";
 import { DashboardHeader } from "~/components/DashboardHeader";
 import { DashboardShell } from "~/components/DashboardShell";
-import { getUserSubscriptionPlan } from "~/lib/getUserSubscriptionPlan";
 import getUser from "~/lib/getUser";
+import { getUserSubscriptionPlan } from "~/lib/getUserSubscriptionPlan";
+import { BillingForm } from "./BillingForm";
 
 export const metadata = {
   title: "Billing",

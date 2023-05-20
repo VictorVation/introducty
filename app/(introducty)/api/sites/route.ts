@@ -1,17 +1,16 @@
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import {
-  uniqueNamesGenerator,
-  Config,
   adjectives,
-  colors,
   animals,
+  colors,
+  uniqueNamesGenerator,
 } from "unique-names-generator";
-import { headers, cookies } from "next/headers";
 import * as z from "zod";
 import { fromZodError } from "zod-validation-error";
+import { RequiresProPlanError } from "~/lib/RequiresProPlanError";
 import getUser from "~/lib/getUser";
 import { Database } from "~/types/supabase";
-import { RequiresProPlanError } from "~/lib/RequiresProPlanError";
 
 // import { RequiresProPlanError } from "@/lib/exceptions";
 // import { getUserSubscriptionPlan } from "@/lib/subscription";
